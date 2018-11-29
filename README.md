@@ -1,7 +1,7 @@
 
 # An elementary bound on Siegel zeroes
 
-The code in this repository verifies a calculation for L-functions associated to real Dirichlet characters in an upcoming mathematics paper. The code is written for Sage 8.4, in order to take advantage of its built in zetaderiv function.
+The code in this repository verifies a calculation for L-functions associated to real Dirichlet characters, based on a method of Pintz. The code is written for Sage 8.4, in order to take advantage of its built in zetaderiv function.
 
 ## Getting Started
 
