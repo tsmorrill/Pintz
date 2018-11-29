@@ -76,7 +76,7 @@ sage: F(1.01100000000000, 400000, 700000, 10^5.54)
 
 ### Generating a new table
 
-The function cq_table(q_list) generates a table of c and x values for which F(c, q0, q1, x) is minimised between the values of q given in q_list.
+The function cq_table(q_list) generates a table of c and x values for which F(c, q0, q1, x) is negative between the values of q given in q_list. The first half of the output is the table, formatted for the tabular environment in LaTeX. The second half is the list of Sage commands to verify the table.
 
 
 ## License
