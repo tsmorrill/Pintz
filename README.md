@@ -10,7 +10,7 @@ The code is split into two sage files depending on the parity of the desired L-f
 sage: attach('even.sage')
 Siegel zeroes for primitive even characters.
 attach('odd.sage')
-Siegel zeroes for primitive even characters.
+Siegel zeroes for primitive odd characters.
 ```
 
 ## Running the verification
