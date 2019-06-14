@@ -34,6 +34,15 @@ def error(A, tau, x, C1, C2):
          + (1 + (1 - tau)*log(x))*x^tau/12 + x^tau/(36*sqrt(3))
          *((1-tau)*(2-tau)*log(x) + ((1-tau)^2 + 6*(1-tau) + 2)/(3-tau)))
 
+    print(x^tau)
+    print(log(x))
+
+    print((2 - tau)*x^tau*log(x))
+    print((1-tau)*(2-tau)*x^tau/(36*sqrt(3)))
+    print((1 + (1 - tau)*log(x))*x^tau/12 )
+    print( x^tau/(36*sqrt(3))*((1-tau)*(2-tau)*log(x) + ((1-tau)^2 + 6*(1-tau) + 2)/(3-tau)))
+
+    print(three_six, three_seven, three_eight, W)
     number = (three_six + three_seven + three_eight + W)
     return number
 
