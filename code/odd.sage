@@ -35,7 +35,8 @@ def F(c, q0, q1, x):
     """Calculate an upper bound for F on the interval [q0, q1] for fixed c and x."""
     A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
     tau = c/log(q1)
-    C1 = 0.5 + tau/12 +tau*(tau + 1)*(tau + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/x**(tau + 3), 1, Infinity)[0]
+    alpha = 1 - tau
+    C1 = 0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(alpha + 3), 1, Infinity)[0]
     C2 = 1 - 1/12 + 1/6*numerical_integral((tau*(tau + 1)*log(t) - 1 - 2*tau)*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(tau + 2), 1, Infinity)[0]
     if q0 <= 10**7:
         Bennet = 79.2
@@ -58,7 +59,8 @@ def search(c, q0, q1, x0, x1, step):
     values = []
     for log_x in x_range:
         x = 10^log_x
-        C1 = (0.5 + tau/12 + tau*(tau + 1)*(tau + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/x**(tau + 3), 1, Infinity)[0])
+        alpha = 1 - tau
+        C1 = 0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(alpha + 3), 1, Infinity)[0]
         C2 = 1 - 1/12 + 1/6*numerical_integral((tau*(tau + 1)*log(t) - 1 - 2*tau)*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(tau + 2), 1, Infinity)[0]
         if q0 <= 10**7:
             Bennet = 79.2
