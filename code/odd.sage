@@ -10,26 +10,30 @@ def error(A, tau, x, C1, C2):
         return 1/d^(1-tau)
     def h8(d, tau):
         return 1/d
+        
     K1 = C1
     K2 = C2
     K3 = x^tau/tau*(log(x) - 1/tau)
+
     if x <= A:                   # trivial bound
-        three_six = K1*(2*x*h6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
+        three_six = -K1*(2*x*h6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
     else:                        # PV inequality
-        three_six = K1*A*log(x)/x^(1-tau)
+        three_six = -K1*A*log(x)/x^(1-tau)
+
     if x <= A:                   # trivial bound
-        three_seven = K2*(2*x*h7(x, tau) + numerical_integral(h7(t, tau), x, A)[0])
+        three_seven = -K2*(2*x*h7(x, tau) + numerical_integral(h7(t, tau), x, A)[0])
     else:                        # PV inequality
-        three_seven = K2*A/x^(1-tau)
+        three_seven = -K2*A/x^(1-tau)
+
     if x <= A:                   # trivial bound
-        three_eight = K3*(2*x*h8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
+        three_eight = -K3*(2*x*h8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
     else:                        # PV inequality
-        three_eight = K3*A/x
-    Euler_Maclaurin1 = (1 - tau)/12 * x**(tau - 2) * (2*min(x, A)*log(x))    # Abel's inequality
-    Euler_Maclaurin2 = 0.5 * x**(tau - 1) * log(x) * min(x, A)
+        three_eight = -K3*A/x
+
     W = x**tau*log(x)*(1 - tau)*(2 - tau)/(432*sqrt(3))*(2 + 1/x)*(1 + 1/x)
     W += 0.5*x**tau*(1 + x)**(-1)*((1 - tau)*(1 + 1/72/sqrt(3))*log(x) + 1
          + (4 - 3*tau)/(72*sqrt(3)*(2 - tau)))
+
     number = (three_six + three_seven + three_eight
               + Euler_Maclaurin1 + Euler_Maclaurin2 + W)
     return number
