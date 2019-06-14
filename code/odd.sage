@@ -34,8 +34,7 @@ def error(A, tau, x, C1, C2):
          + (1 + (1 - tau)*log(x))*x^tau/12 + x^tau/(36*sqrt(3))
          *((1-tau)*(2-tau)*log(x) + ((1-tau)^2 + 6*(1-tau) + 2)/(3-tau)))
 
-    number = (three_six + three_seven + three_eight
-              + Euler_Maclaurin1 + Euler_Maclaurin2 + W)
+    number = (three_six + three_seven + three_eight + W)
     return number
 
 def F(c, q0, q1, x):
