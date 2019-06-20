@@ -30,9 +30,7 @@ def error(A, tau, x, C1, C2):
     else:                        # PV inequality
         three_eight = -K3*A/x
 
-    W = ((2 - tau)*x^tau*log(x) + (1-tau)*(2-tau)*x^tau/(36*sqrt(3))
-         + (1 + (1 - tau)*log(x))*x^tau/12 + x^tau/(36*sqrt(3))
-         *((1-tau)*(2-tau)*log(x) + ((1-tau)^2 + 6*(1-tau) + 2)/(3-tau)))
+    W = x^tau*((1-tau)*log(x) - 1)(1 + 1/x)/24
 
     print(x^tau)
     print(log(x))
