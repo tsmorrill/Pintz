@@ -31,7 +31,7 @@ def error(A, tau, x, C1, C2):
               + Euler_Maclaurin1 + Euler_Maclaurin2 + W)
     return number
 
-    def constants(c, q0, q1):
+def constants(c, q0, q1):
         """Calculate C_1, C_2 on the interval [q0, q1] for fixed c."""
 
         A = 0.5 * sqrt(q1) * log(q1) * (2/pi/pi + 1/log(q0))    # chi is even
