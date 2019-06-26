@@ -14,7 +14,7 @@ def error(A, tau, x, C1, C2):
 
     K1 = C1
     K2 = C2
-    K3 = x^tau/tau*(log(x) - 1/tau)
+    K3 = x^tau/tau*(1/tau - log(x))
 
     if x <= A:                   # trivial bound
         three_six = K1*(2*x*h6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
@@ -30,8 +30,6 @@ def error(A, tau, x, C1, C2):
         three_eight = K3*(2*x*h8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
     else:                        # PV inequality
         three_eight = K3*A/x
-
-    print(abs(three_seven).n())
 
     W = (x**tau*log(x)*(0.5 + (1-tau)/12 + (1 - tau)*(2 -tau)/36/sqrt(3))
          + x^tau/36/sqrt(3)*((3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
@@ -89,10 +87,14 @@ def search(c, q0, q1, x0, x1, step):
     x_range = [x_min + i*step for i in range(floor((x_max-x_min)/step) + 1)]
     values = []
 
+    if not x_range:
+        return None
     for log_x in x_range:
         x = 10^log_x
         alpha = 1 - tau
-        C1 = 0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(alpha + 3), 1, Infinity)[0]
+        C1 = (0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6
+              *numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
+                                  /t**(alpha + 3), 1, Infinity)[0])
         C2 = 11/12 + (1/(1 - alpha)^2 + 1/6*numerical_integral(
               (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
               *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
