@@ -17,19 +17,21 @@ def error(A, tau, x, C1, C2):
     K3 = x^tau/tau*(log(x) - 1/tau)
 
     if x <= A:                   # trivial bound
-        three_six = -K1*(2*x*h6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
+        three_six = K1*(2*x*h6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
     else:                        # PV inequality
-        three_six = -K1*A*log(x)/x^(1-tau)
+        three_six = K1*A*log(x)/x^(1-tau)
 
     if x <= A:                   # trivial bound
-        three_seven = -K2*(2*x*h7(x, tau) + numerical_integral(h7(t, tau), x, A)[0])
+        three_seven = K2*(2*x*h7(x, tau) + numerical_integral(h7(t, tau), x, A)[0])
     else:                        # PV inequality
-        three_seven = -K2*A/x^(1-tau)
+        three_seven = K2*A/x^(1-tau)
 
     if x <= A:                   # trivial bound
-        three_eight = -K3*(2*x*h8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
+        three_eight = K3*(2*x*h8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
     else:                        # PV inequality
-        three_eight = -K3*A/x
+        three_eight = K3*A/x
+
+    print(abs(three_seven).n())
 
     W = (x**tau*log(x)*(0.5 + (1-tau)/12 + (1 - tau)*(2 -tau)/36/sqrt(3))
          + x^tau/36/sqrt(3)*((3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
