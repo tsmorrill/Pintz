@@ -150,13 +150,13 @@ def best_c(q0, q1):
 def best_q1(q0, c):
     """Calculate the maximal q1 so that F < 0 on the interval [q0, q1] for fixed c."""
     q1_true, q_step = q0, 10**int(log(q0, 10) + 4)
-    significant_figures, record_significant_figures = 0, False
     done = False
     while not done:
         q1, it_works = q1_true + q_step, True
+        q1 = int(q1/10**int(log(q1, 10)-1))*10**int(log(q1, 10))
         while it_works:
             x0, x1, step = 0, log(q0^(1/c), 10), 1
-            for i in range(3):
+            for i in range(4):
                 result, x = search(c, q0, q1, x0, x1, step)
                 x0, x1, step = max(0, x - step), min(x1, x + step), step/10
                 if result:
@@ -165,14 +165,10 @@ def best_q1(q0, c):
                     x_true, q1_true = x, q1
                     print("q1 >= {}.".format(q1_true))
                     q1 += q_step
-                    break
                 else:
                     it_works = False
-        if record_significant_figures == True:
-            significant_figures += 1
-            if significant_figures == 2:
-                done = True
         q_step /= 10
+        done = (int(log(q_step, 10)) <= int(log(q1_true, 10) - 2))
     str = 'F({}, {}, {}, 10^{})'.format(c, q0, q1_true, x_true)
     print(str)
     return(q1_true)
