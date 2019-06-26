@@ -24,9 +24,10 @@ def error(A, tau, x, C1, C2):
     else:                        # PV inequality
         three_eight = x^tau/tau*(1/tau - log(x))*A/x
 
-    W = x**tau*log(x)/2          # impossibly good
+    W = (x**tau*log(x)*(0.5 + (1-tau)/12 + (1 - tau)*(2 -tau)/36/sqrt(3))
+         + x^tau/36/sqrt(3)*((3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
 
-    print(W.n())
+    #print(W.n())
 
     number = (three_six + three_seven + three_eight + W)
 
