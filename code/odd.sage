@@ -2,10 +2,8 @@ print("Siegel zeroes for primitive odd characters.")
 
 var('t')
 
-def error(A, tau, T, C1, C2):
-    """Calculate E(q, tau, T + 1/2) for precomputed A, tau, C1, C2."""
-
-    x = int(T) + 1/2
+def error(A, tau, x, C1, C2):
+    """Calculate E(q, tau, x) for precomputed A, tau, C1, C2."""
 
     def h6(d, tau):
         return log(d)/d^(1-tau)
@@ -54,10 +52,8 @@ def constants(c, q0, q1):
 
     return(C1, C2)
 
-def F(c, q0, q1, T):
+def F(c, q0, q1, x):
     """Calculate an upper bound for F on the interval [q0, q1] for fixed c and x."""
-
-    x = T + 1/2
 
     A = 0.5 * sqrt(q1) * log(q1) * (2/pi/pi + 1/log(q0))    # chi is even
     # A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
@@ -92,8 +88,7 @@ def search(c, q0, q1, x0, x1, step):
     values = []
 
     for log_x in x_range:
-        T = int(10^log_x)
-        x = T + 1/2
+        x = 10^log_x
         alpha = 1 - tau
         C1 = 0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(alpha + 3), 1, Infinity)[0]
         C2 = 11/12 + (1/(1 - alpha)^2 + 1/6*numerical_integral(
