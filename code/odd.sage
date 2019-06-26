@@ -41,7 +41,8 @@ def error(A, tau, T, C1, C2):
 def constants(c, q0, q1):
     """Calculate C_1, C_2 on the interval [q0, q1] for fixed c."""
 
-    A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
+    A = 0.5 * sqrt(q1) * log(q1) * (2/pi/pi + 1/log(q0))    # chi is even
+    # A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
     tau = c/log(q1)
     alpha = 1 - tau
     C1 = 0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(alpha + 3), 1, Infinity)[0]
@@ -57,7 +58,8 @@ def F(c, q0, q1, T):
 
     x = T + 1/2
 
-    A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
+    A = 0.5 * sqrt(q1) * log(q1) * (2/pi/pi + 1/log(q0))    # chi is even
+    # A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
     tau = c/log(q1)
     alpha = 1 - tau
     C1 = 0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(alpha + 3), 1, Infinity)[0]
@@ -80,7 +82,9 @@ def search(c, q0, q1, x0, x1, step):
     """
 
     tau = c/log(q1)
-    A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
+
+    A = 0.5 * sqrt(q1) * log(q1) * (2/pi/pi + 1/log(q0))    # chi is even
+    # A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
     x_min = max(x0, log((exp(1/(2*tau - 1)) + 1)**2, 10))    # lower bound from Lemma 4
     x_max = min(x1, log(q0^(1/c), 10))    # upper bound from (10)
     x_range = [x_min + i*step for i in range(floor((x_max-x_min)/step) + 1)]
