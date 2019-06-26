@@ -12,7 +12,7 @@ def error(A, tau, x, C1, C2):
     def h8(d, tau):
         return 1/d
 
-    K1 = C1
+    K1 = -C1
     K2 = C2
     K3 = x^tau/tau*(1/tau - log(x))
 
@@ -33,6 +33,8 @@ def error(A, tau, x, C1, C2):
 
     W = (x**tau*log(x)*(0.5 + (1-tau)/12 + (1 - tau)*(2 -tau)/36/sqrt(3))
          + x^tau/36/sqrt(3)*((3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
+
+    print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
 
     number = (three_six + three_seven + three_eight + W)
     return number
