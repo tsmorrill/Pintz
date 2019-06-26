@@ -25,8 +25,7 @@ def error(A, tau, x, C1, C2):
     Euler_Maclaurin1 = (1 - tau)/12 * x**(tau - 2) * (2*min(x, A)*log(x))    # Abel's inequality
     Euler_Maclaurin2 = 0.5 * x**(tau - 1) * log(x) * min(x, A)
     W = x**tau*log(x)*(1 - tau)*(2 - tau)/(432*sqrt(3))*(2 + 1/x)*(1 + 1/x)
-    W += 0.5*x**tau*(1 + 1/x)*((1 - tau)*(1 + 1/72/sqrt(3))*log(x) + 1
-         + (4 - 3*tau)/(72*sqrt(3)*(2 - tau)))
+    W = x**tau*log(x)/2          # impossibly good
     number = (three_six + three_seven + three_eight
               + Euler_Maclaurin1 + Euler_Maclaurin2 + W)
     return number
