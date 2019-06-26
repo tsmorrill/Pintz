@@ -10,6 +10,7 @@ def error(A, tau, x, C1, C2):
         return 1/d^(1-tau)
     def h8(d, tau):
         return 1/d
+
     if x <= A:                   # trivial bound
         three_six = (1/tau - C1)*(2*x*h6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
     else:                        # PV inequality
@@ -22,8 +23,13 @@ def error(A, tau, x, C1, C2):
         three_eight = x^tau/tau*(1/tau - log(x))*(2*x*h8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
     else:                        # PV inequality
         three_eight = x^tau/tau*(1/tau - log(x))*A/x
+
     W = x**tau*log(x)/2          # impossibly good
+
+    print(W.n())
+
     number = (three_six + three_seven + three_eight + W)
+
     return number
 
 def constants(c, q0, q1):

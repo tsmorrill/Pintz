@@ -35,6 +35,8 @@ def error(A, tau, T, C1, C2):
 
     W = x**tau*log(x)/2          # impossibly good
 
+    print(W.n())
+
     number = (three_six + three_seven + three_eight + W)
     return number
 
