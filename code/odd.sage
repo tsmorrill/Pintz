@@ -79,8 +79,7 @@ def F(c, q0, q1, x):
     else:
         Bennet = 12
     lower_bound = (-(1/tau-log(x))*Bennet*x^tau/tau/sqrt(q1)
-                    + 2*zetaderiv(1, 2-2*tau)
-                    + 2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2)
+                    + 4*log(4))
     return (float(error(A, tau, x, C1, C2) + lower_bound))
 
 def search(c, q0, q1, x0, x1, step):
