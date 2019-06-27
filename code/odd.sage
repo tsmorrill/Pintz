@@ -42,25 +42,10 @@ def error(A, tau, x, C1, C2):
     W = (x**tau*log(x)*(0.5 + (1-tau)/12 + (1 - tau)*(2 -tau)/36/sqrt(3))
          + x^tau/36/sqrt(3)*((3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
 
-    print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
+    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
 
     number = (three_six + three_seven + three_eight + W)
     return number
-
-def constants(c, q0, q1):
-    """Calculate C_1, C_2 on the interval [q0, q1] for fixed c."""
-
-    A = 0.5 * sqrt(q1) * log(q1) * (2/pi/pi + 1/log(q0))    # chi is even
-    # A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
-    tau = c/log(q1)
-    alpha = 1 - tau
-    C1 = 0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(alpha + 3), 1, Infinity)[0]
-    C2 = 11/12 + (1/(1 - alpha)^2 + 1/6*numerical_integral(
-          (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
-          *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
-          /t**(alpha+3), 1, Infinity)[0])
-
-    return(C1, C2)
 
 def F(c, q0, q1, x):
     """Calculate an upper bound for F on the interval [q0, q1] for fixed c and x."""
