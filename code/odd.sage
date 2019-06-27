@@ -53,12 +53,14 @@ def F(c, q0, q1, x):
     A = 0.5 * sqrt(q1) * log(q1) * (2/pi/pi + 1/log(q0))    # chi is even
     # A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
     tau = c/log(q1)
+
     alpha = 1 - tau
     C1 = 0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(alpha + 3), 1, Infinity)[0]
     C2 = 11/12 + (1/(1 - alpha)^2 + 1/6*numerical_integral(
           (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
           *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
           /t**(alpha+3), 1, Infinity)[0])
+
     if q0 <= 10**7:
         Bennet = 79.2
     else:
@@ -109,13 +111,14 @@ def search(c, q0, q1, x0, x1, step):
                               -2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2,
                               log(4)/4)
 
-        print('E = {}'.format(E.n()))
-        print('L1 = {}'.format(-L1.n()))
-        print('lower_bound = {}'.format(-lower_bound.n()))
+        # print('E = {}'.format(E.n()))
+        # print('L1 = {}'.format(-L1.n()))
+        # print('lower_bound = {}'.format(-lower_bound.n()))
 
         values.append((float(E - L1 - lower_bound), log_x))
     F, x = (float(i) for i in min(values))
     output = (F < 0)
+
     return(output, x)
 
 def best_c(q0, q1, significant_figures=2):
@@ -146,12 +149,15 @@ def best_c(q0, q1, significant_figures=2):
             if current_figures == significant_figures:
                 done = True
         c_step /= 10
+
     q0_magnitude = int(log(q0, 10))
     q0_lead = round(q0/10**q0_magnitude, 2)
     q1_magnitude = int(log(q1, 10))
     q1_lead = round(q1/10**q1_magnitude, 2)
+
     str1 = "${{{}}} \cdot 10^{{{}}}$ & ${{{}}} \cdot 10^{{{}}}$ & \\num{{{}}} & $10^{{{}}}$ \\\\".format(q0_lead, q0_magnitude, q1_lead, q1_magnitude, round(c_true,5), x_true)
     str2 = 'F({}, {}, {}, 10^{})'.format(c_true, q0, q1, x_true)
+
     return(str1, str2)
 
 def best_q1(q0, c):
