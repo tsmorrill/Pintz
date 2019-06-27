@@ -12,7 +12,7 @@ def error(A, tau, x, C1, C2):
     def H8(d, tau):
         return 1/d
 
-    # h6(d) = |H6(d)| &c
+    # h6(z) = |d/dz H6(z)| &c
 
     def h6(d, tau):
             return ((1-tau)*log(d) - 1)/d^(2-tau)
@@ -25,27 +25,24 @@ def error(A, tau, x, C1, C2):
     K2 = abs(C2)
     K3 = abs(x^tau/tau*(1/tau - log(x)))
 
-    print((A/x).n())
+    three_six = three_seven = three_eight = Infinity
 
     if x <= A:                   # trivial bound
         three_six = K1*(2*x*H6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
-    else:                        # PV inequality
-        three_six = K1*A*log(x)/x^(1-tau)
+    three_six = min(three_six, K1*A*log(x)/x^(1-tau))
 
     if x <= A:                   # trivial bound
         three_seven = K2*(2*x*H7(x, tau) + numerical_integral(h7(t, tau), x, A)[0])
-    else:                        # PV inequality
-        three_seven = K2*A/x^(1-tau)
+    three_seven = min(three_seven, K2*A/x^(1-tau))
 
     if x <= A:                   # trivial bound
         three_eight = K3*(2*x*H8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
-    else:                        # PV inequality
-        three_eight = K3*A/x
+    three_eight = min(three_eight, K3*A/x)
 
     W = (x**tau*log(x)*(0.5 + (1-tau)/12 + (1 - tau)*(2 -tau)/36/sqrt(3))
          + x^tau/36/sqrt(3)*((3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
 
-    print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
+    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
 
     number = (three_six + three_seven + three_eight + W)
     return number
