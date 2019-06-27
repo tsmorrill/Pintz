@@ -12,9 +12,9 @@ def error(A, tau, x, C1, C2):
     def h8(d, tau):
         return 1/d
 
-    K1 = -C1
-    K2 = C2
-    K3 = x^tau/tau*(1/tau - log(x))
+    K1 = abs(C1)
+    K2 = abs(C2)
+    K3 = abs(x^tau/tau*(1/tau - log(x)))
 
     if x <= A:                   # trivial bound
         three_six = K1*(2*x*h6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
@@ -34,7 +34,7 @@ def error(A, tau, x, C1, C2):
     W = (x**tau*log(x)*(0.5 + (1-tau)/12 + (1 - tau)*(2 -tau)/36/sqrt(3))
          + x^tau/36/sqrt(3)*((3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
 
-    print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
+    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
 
     number = (three_six + three_seven + three_eight + W)
     return number
@@ -117,11 +117,11 @@ def search(c, q0, q1, x0, x1, step):
         output = False
     return(output, x)
 
-def best_c(q0, q1):
+def best_c(q0, q1, significant_figures=2):
     """Calculate the maximal c so that F < 0 on the interval [q0, q1]."""
 
     c_true, c_step = 0, 1.0
-    record_significant_figures, significant_figures = False, 0
+    record_significant_figures, current_figures = False, 0
     done = False
 
     while not done:
@@ -141,8 +141,8 @@ def best_c(q0, q1):
                 else:
                     it_works = False
         if record_significant_figures == True:
-            significant_figures += 1
-            if significant_figures == 4:
+            current_figures += 1
+            if current_figures == significant_figures:
                 done = True
         c_step /= 10
     q0_magnitude = int(log(q0, 10))
