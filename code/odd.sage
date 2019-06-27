@@ -5,6 +5,8 @@ var('t')
 def error(A, tau, x, C1, C2):
     """Calculate E(q, tau, x) for precomputed A, tau, C1, C2."""
 
+    alpha = 1 - tau
+
     def H6(d, tau):
         return log(d)/d^(1-tau)
     def H7(d, tau):
@@ -39,12 +41,16 @@ def error(A, tau, x, C1, C2):
         three_eight = K3*(2*x*H8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
     three_eight = min(three_eight, K3*A/x)
 
-    W = (x**tau*log(x)*(0.5 + (1-tau)/12 + (1 - tau)*(2 -tau)/36/sqrt(3))
-         + x^tau/36/sqrt(3)*((3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
+    W = (x**tau*log(x)/2*sqrt(A/x)
+        + x**tau*(1 + alpha*log(x))/24*sqrt(A/x)*(sqrt(A/x) + 1/x)
+        + x**tau*(alpha*(alpha + 1)*log(x) + (3*alpha**2 + 6*alpha + 2)/(alpha + 2))
+          /216/sqrt(3)*sqrt(A/x)*(sqrt(A/x) + 1/x)*(2*sqrt(A/x) + 1/x))
 
-    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
+    upper_sum = sqrt(A)*x**tau*log(x)/tau/sqrt(x)
 
-    number = (three_six + three_seven + three_eight + W)
+    print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
+
+    number = (three_six + three_seven + three_eight + W + upper_sum)
     return number
 
 def F(c, q0, q1, x):
