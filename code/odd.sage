@@ -42,7 +42,7 @@ def error(A, tau, x, C1, C2):
     W = (x**tau*log(x)*(0.5 + (1-tau)/12 + (1 - tau)*(2 -tau)/36/sqrt(3))
          + x^tau/36/sqrt(3)*((3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
 
-    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
+    print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
 
     number = (three_six + three_seven + three_eight + W)
     return number
@@ -81,7 +81,7 @@ def F(c, q0, q1, x):
     L1 = (1/tau - log(x))*Bennet*x^tau/tau/sqrt(q1)
     lower_bound = max(-2*zetaderiv(1, 2-2*tau)
                       -2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2,
-                      4*log(4))
+                      log(4)/4)
     return (float(error(A, tau, x, C1, C2) - L1 - lower_bound))
 
 def search(c, q0, q1, x0, x1, step):
@@ -118,12 +118,17 @@ def search(c, q0, q1, x0, x1, step):
         else:
             Bennet = 12
 
+        E = error(A, tau, x, C1, C2)
         L1 = (1/tau - log(x))*Bennet*x^tau/tau/sqrt(q1)
         lower_bound = max(-2*zetaderiv(1, 2-2*tau)
                               -2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2,
-                              4*log(4))
-        values.append((float(error(A, tau, x, C1, C2)
-                      - L1 - lower_bound), log_x))
+                              log(4)/4)
+
+        print('E = {}'.format(E.n()))
+        print('L1 = {}'.format(-L1.n()))
+        print('lower_bound = {}'.format(-lower_bound.n()))
+
+        values.append((float(E - L1 - lower_bound), log_x))
     F, x = (float(i) for i in min(values))
     output = (F < 0)
     return(output, x)
