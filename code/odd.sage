@@ -5,36 +5,47 @@ var('t')
 def error(A, tau, x, C1, C2):
     """Calculate E(q, tau, x) for precomputed A, tau, C1, C2."""
 
-    def h6(d, tau):
+    def H6(d, tau):
         return log(d)/d^(1-tau)
-    def h7(d, tau):
+    def H7(d, tau):
         return 1/d^(1-tau)
-    def h8(d, tau):
+    def H8(d, tau):
         return 1/d
+
+    # h6(d) = |H6(d)| &c
+
+    def h6(d, tau):
+            return ((1-tau)*log(d) - 1)/d^(2-tau)
+    def h7(d, tau):
+            return (1 - tau)/d^(2-tau)
+    def h8(d, tau):
+            return d**(-2)
 
     K1 = abs(C1)
     K2 = abs(C2)
     K3 = abs(x^tau/tau*(1/tau - log(x)))
 
+    print((A/x).n())
+
     if x <= A:                   # trivial bound
-        three_six = K1*(2*x*h6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
+        three_six = K1*(2*x*H6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
     else:                        # PV inequality
         three_six = K1*A*log(x)/x^(1-tau)
 
     if x <= A:                   # trivial bound
-        three_seven = K2*(2*x*h7(x, tau) + numerical_integral(h7(t, tau), x, A)[0])
+        three_seven = K2*(2*x*H7(x, tau) + numerical_integral(h7(t, tau), x, A)[0])
     else:                        # PV inequality
         three_seven = K2*A/x^(1-tau)
 
     if x <= A:                   # trivial bound
-        three_eight = K3*(2*x*h8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
+        three_eight = K3*(2*x*H8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
     else:                        # PV inequality
         three_eight = K3*A/x
 
     W = (x**tau*log(x)*(0.5 + (1-tau)/12 + (1 - tau)*(2 -tau)/36/sqrt(3))
          + x^tau/36/sqrt(3)*((3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
 
-    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
+    print(three_six.n(), three_seven.n(), three_eight.n(), W.n())
 
     number = (three_six + three_seven + three_eight + W)
     return number
@@ -78,12 +89,13 @@ def F(c, q0, q1, x):
 def search(c, q0, q1, x0, x1, step):
     """Find an x on the interval [x0, x1] which minimizes F for c and q in [q0, q01],
     searching in increments of 10**step. Then, return the tuple (bool(F < 0), log(x, 10)).
+    Returns None if the specified range and step size have no test values.
     """
 
     tau = c/log(q1)
-
     A = 0.5 * sqrt(q1) * log(q1) * (2/pi/pi + 1/log(q0))    # chi is even
     # A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
+
     x_min = max(x0, log((exp(1/(2*tau - 1)) + 1)**2, 10))    # lower bound from Lemma 4
     x_max = min(x1, log(q0^(1/c), 10))    # upper bound from (10)
     x_range = [x_min + i*step for i in range(floor((x_max-x_min)/step) + 1)]
@@ -100,7 +112,6 @@ def search(c, q0, q1, x0, x1, step):
                        (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
                         *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
                         /t**(alpha+3), 1, Infinity)[0])
-    print(C2)
 
     for log_x in x_range:
         x = 10^log_x
@@ -114,10 +125,7 @@ def search(c, q0, q1, x0, x1, step):
         values.append((float(error(A, tau, x, C1, C2)
                       + lower_bound), log_x))
     F, x = (float(i) for i in min(values))
-    if F < 0:
-        output = True
-    else:
-        output = False
+    output = (F < 0)
     return(output, x)
 
 def best_c(q0, q1, significant_figures=2):
