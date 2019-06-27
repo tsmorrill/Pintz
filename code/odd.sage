@@ -78,11 +78,11 @@ def F(c, q0, q1, x):
         Bennet = 79.2
     else:
         Bennet = 12
-    L1 = -(log(x) - 1/tau)*Bennet*x^tau/tau/sqrt(q1)
+    L1 = (1/tau - log(x))*Bennet*x^tau/tau/sqrt(q1)
     lower_bound = max(-2*zetaderiv(1, 2-2*tau)
                       -2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2,
                       4*log(4))
-    return (float(error(A, tau, x, C1, C2) + L1 - lower_bound))
+    return (float(error(A, tau, x, C1, C2) - L1 - lower_bound))
 
 def search(c, q0, q1, x0, x1, step):
     """Find an x on the interval [x0, x1] which minimizes F for c and q in [q0, q01],
@@ -118,12 +118,12 @@ def search(c, q0, q1, x0, x1, step):
         else:
             Bennet = 12
 
-        L1 = -(log(x) - 1/tau)*Bennet*x^tau/tau/sqrt(q1)
+        L1 = (1/tau - log(x))*Bennet*x^tau/tau/sqrt(q1)
         lower_bound = max(-2*zetaderiv(1, 2-2*tau)
                               -2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2,
                               4*log(4))
         values.append((float(error(A, tau, x, C1, C2)
-                      + L1 - lower_bound), log_x))
+                      - L1 - lower_bound), log_x))
     F, x = (float(i) for i in min(values))
     output = (F < 0)
     return(output, x)
