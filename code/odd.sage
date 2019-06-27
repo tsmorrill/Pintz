@@ -41,12 +41,16 @@ def error(A, tau, x, C1, C2):
         three_eight = K3*(2*x*H8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
     three_eight = min(three_eight, K3*A/x)
 
-    W = (x**tau*log(x)/2*sqrt(A/x)
-        + x**tau*(1 + alpha*log(x))/24*sqrt(A/x)*(sqrt(A/x) + 1/x)
-        + x**tau*(alpha*(alpha + 1)*log(x) + (3*alpha**2 + 6*alpha + 2)/(alpha + 2))
-          /216/sqrt(3)*sqrt(A/x)*(sqrt(A/x) + 1/x)*(2*sqrt(A/x) + 1/x))
+    z = sqrt(A*x)
 
-    upper_sum = sqrt(A)*x**tau*log(x)/tau/sqrt(x)
+    W = (x**tau*log(x)/2*z/x
+        + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
+        + x**tau*(alpha*(alpha + 1)*log(x) + (3*alpha**2 + 6*alpha + 2)/(alpha + 2))
+          /216/sqrt(3)*z/x*(z/x + 1/x)*(2*z/x + 1/x))
+
+    upper_sum = A/z*x**tau*log(x)/tau
+
+    # the_rest = minimize(W + upper_sum, [sqrt(A*x)])[0]
 
     print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
 
