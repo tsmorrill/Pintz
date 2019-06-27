@@ -91,16 +91,19 @@ def search(c, q0, q1, x0, x1, step):
 
     if not x_range:
         return None
+
+    alpha = 1 - tau
+    C1 = (0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6
+          *numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
+                              /t**(alpha + 3), 1, Infinity)[0])
+    C2 = 11/12 + (1/(1 - alpha)^2 + 1/6*numerical_integral(
+                       (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
+                        *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
+                        /t**(alpha+3), 1, Infinity)[0])
+    print(C2)
+
     for log_x in x_range:
         x = 10^log_x
-        alpha = 1 - tau
-        C1 = (0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6
-              *numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
-                                  /t**(alpha + 3), 1, Infinity)[0])
-        C2 = 11/12 + (1/(1 - alpha)^2 + 1/6*numerical_integral(
-              (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
-              *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
-              /t**(alpha+3), 1, Infinity)[0])
         if q0 <= 10**7:
             Bennet = 79.2
         else:
