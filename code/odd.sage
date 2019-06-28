@@ -17,11 +17,11 @@ def error(A, tau, x, C1, C2):
     # h6(z) = |d/dz H6(z)| &c
 
     def h6(d, tau):
-            return ((1-tau)*log(d) - 1)/d^(2-tau)
+        return ((1-tau)*log(d) - 1)/d^(2-tau)
     def h7(d, tau):
-            return (1 - tau)/d^(2-tau)
+        return (1 - tau)/d^(2-tau)
     def h8(d, tau):
-            return d**(-2)
+        return d**(-2)
 
     K1 = abs(C1)
     K2 = abs(C2)
@@ -41,7 +41,6 @@ def error(A, tau, x, C1, C2):
         three_eight = K3*(2*x*H8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
     three_eight = min(three_eight, K3*A/x)
 
-
     # Spitting sum
     # D1 = x**tau*log(x)/2/x     # lead term of W
     # D2 = A*x**tau*log(x)/tau   # upper_sum
@@ -54,7 +53,7 @@ def error(A, tau, x, C1, C2):
 
     # Not splitting sum
     W = (x**tau*log(x)*(1/2 + (1-tau)/12 + (1-tau)*(2-tau)/36/sqrt(3))
-        + x**tau*((1-tau)*(2-tau)*log(x) + (3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
+        + x**tau/36/sqrt(3)*((1-tau)*(2-tau)*log(x) + (3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
 
     # the_rest = minimize(W + upper_sum, [sqrt(A*x)])[0]
 
