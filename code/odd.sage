@@ -60,7 +60,7 @@ def error(A, tau, x, C1, C2):
 
     # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
 
-    number = (three_six + three_seven + three_eight + W + upper_sum)
+    number = (three_six + three_seven + three_eight + W)
     return number
 
 def F(c, q0, q1, x):
