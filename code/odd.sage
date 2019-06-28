@@ -41,7 +41,10 @@ def error(A, tau, x, C1, C2):
         three_eight = K3*(2*x*H8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
     three_eight = min(three_eight, K3*A/x)
 
-    z = sqrt(A*x)
+    D1 = x**tau*log(x)/2/x     # lead term of W
+    D2 = A*x**tau*log(x)/tau   # upper_sum
+
+    z = sqrt(D2/D1)            # minimize D1*z + D2/z
 
     W = (x**tau*log(x)/2*z/x
         + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
