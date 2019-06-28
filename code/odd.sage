@@ -82,6 +82,7 @@ def F(c, q0, q1, x):
         Bennet = 79.2
     else:
         Bennet = 12
+
     L1 = (1/tau - log(x))*Bennet*x^tau/tau/sqrt(q1)
     lower_bound = max(-2*zetaderiv(1, 2-2*tau)
                       -2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2,
@@ -95,8 +96,8 @@ def search(c, q0, q1, x0, x1, step):
     """
 
     tau = c/log(q1)
-    A = 0.5 * sqrt(q1) * log(q1) * (2/pi/pi + 1/log(q0))    # chi is even
-    # A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
+    A = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
+    # A = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
 
     x_min = max(x0, log((exp(1/(2*tau - 1)) + 1)**2, 10))    # lower bound from Lemma 4
     x_max = min(x1, log(q0^(1/c), 10))    # upper bound from (10)
@@ -146,6 +147,7 @@ def best_c(q0, q1, significant_figures=2):
     done = False
 
     while not done:
+        print('Trying increments of {}.'.format(c_step))
         c, it_works = c_true + c_step, True
         while it_works:
             x0, x1, step = 0, log(q0^(1/c), 10), 1
