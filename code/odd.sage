@@ -65,15 +65,17 @@ def error(A, tau, x, C1, C2):
 def F(c, q0, q1, x):
     """Calculate an upper bound for F on the interval [q0, q1] for fixed c and x."""
 
-    A = 0.5 * sqrt(q1) * log(q1) * (2/pi/pi + 1/log(q0))    # chi is even
-    # A = sqrt(q1) * log(q1) * (1/2/pi + 1/log(q0))    # chi is odd
+    A = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
+    # A = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
     tau = c/log(q1)
 
     alpha = 1 - tau
-    C1 = 0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6*numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))/t**(alpha + 3), 1, Infinity)[0]
-    C2 = 11/12 + (1/(1 - alpha)^2 + 1/6*numerical_integral(
-          (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
-          *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
+    C1 = (0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6
+         *numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
+                             /t**(alpha + 3), 1, Infinity)[0])
+    C2 = (11/12 + (1 - alpha)**-2 + 1/6*numerical_integral(
+          (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha + 2)*log(t))
+          *(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
           /t**(alpha+3), 1, Infinity)[0])
 
     if q0 <= 10**7:
