@@ -65,8 +65,8 @@ def error(A, tau, x, C1, C2):
 def F(c, q0, q1, x):
     """Calculate an upper bound for F on the interval [q0, q1] for fixed c and x."""
 
-    A = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
-    # A = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
+    # A = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
+    A = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
     tau = c/log(q1)
 
     alpha = 1 - tau
@@ -96,8 +96,8 @@ def search(c, q0, q1, x0, x1, step):
     """
 
     tau = c/log(q1)
-    A = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
-    # A = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
+    # A = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
+    A = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
 
     x_min = max(x0, log((exp(1/(2*tau - 1)) + 1)**2, 10))    # lower bound from Lemma 4
     x_max = min(x1, log(q0^(1/c), 10))    # upper bound from (10)
