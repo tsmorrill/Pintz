@@ -219,13 +219,15 @@ def q_list(q0, c, stop):
         q0 = q1
     return(q_list)
 
-def cq_table(q_list):
+def cq_table(q_list, significant_figures=4):
     """Generate a table of c values corresponding to q_list formatted for LaTeX, then generate Sage
     commands to verify these calculations.
     """
     TeX_list, Sage_list = [], []
     for q0, q1 in zip(q_list[:-1], q_list[1:]):
-        TeX_str, Sage_str = best_c(q0, q1)
+        print(q0, q1)
+        TeX_str, Sage_str = best_c(q0, q1, significant_figures=significant_figures)
+        print('====')
         TeX_list.append(TeX_str)
         Sage_list.append(Sage_str)
     for item in TeX_list:
