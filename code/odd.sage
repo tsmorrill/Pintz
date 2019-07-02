@@ -209,15 +209,6 @@ def best_q1(q0, c):
     print(str)
     return(q1_true)
 
-def q_list(q0, c, stop):
-    """Calculate a list of q values starting at q0 so that F < 0 for fixed c."""
-    q_list, q1 = [q0], None
-    while q1 < stop:
-        print(q0)
-        q1 = best_q1(q0, c)
-        q_list.append(q1)
-        q0 = q1
-    return(q_list)
 
 def cq_table(q_list, significant_figures=4):
     """Generate a table of c values corresponding to q_list formatted for LaTeX, then generate Sage
