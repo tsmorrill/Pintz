@@ -27,7 +27,7 @@ def error(A, tau, x, C1, C2):
     K2 = abs(C2)
     K3 = abs(x^tau/tau*(1/tau - log(x)))
 
-    three_six = three_seven = three_eight = Infinity
+    three_six = three_seven = three_eight = Infinity  # Initialize
 
     if x <= A:                   # trivial bound
         three_six = K1*(2*x*H6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
@@ -176,6 +176,10 @@ def best_c(q0, q1, significant_figures=2):
 
     str1 = "${{{}}} \cdot 10^{{{}}}$ & ${{{}}} \cdot 10^{{{}}}$ & \\num{{{}}} & $10^{{{}}}$ \\\\".format(q0_lead, q0_magnitude, q1_lead, q1_magnitude, round(c_true,5), x_true)
     str2 = 'F({}, {}, {}, 10^{})'.format(c_true, q0, q1, x_true)
+
+    print('')
+    print('c = {}.'.format(c_true))
+    print('')
 
     return(str1, str2)
 
