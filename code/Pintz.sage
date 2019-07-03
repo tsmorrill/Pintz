@@ -56,6 +56,7 @@ def error(A, tau, x, C1, C2):
     D2 = A*x**tau/tau*(log(x) - 1/tau) + A/tau**2   # upper_sum
     z = sqrt(D2/D1)            # minimize D1*z + D2/z
     z = min(z, x/2)
+    z *= 0.8
 
     W = (x**tau*log(x)/2*z/x
          + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
