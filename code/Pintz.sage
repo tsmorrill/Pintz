@@ -5,6 +5,13 @@ odd = 'odd'
 
 var('t')
 
+def character_sum(q0, q1, parity):
+    if parity == 'even':
+        number = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
+    if parity == 'odd':
+        number = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
+    return number
+
 def error(A, tau, x, C1, C2):
     """Calculate E(q, tau, x) for precomputed A, tau, C1, C2."""
 
@@ -63,13 +70,6 @@ def error(A, tau, x, C1, C2):
     # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
 
     number = (three_six + three_seven + three_eight + W + upper_sum)
-    return number
-
-def character_sum(q0, q1, parity):
-    if parity == 'even':
-        number = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
-    if parity == 'odd':
-        number = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
     return number
 
 def F(c, q0, q1, x, parity):
