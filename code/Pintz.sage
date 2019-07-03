@@ -5,11 +5,11 @@ odd = 'odd'
 
 var('t')
 
-def character_sum(q0, q1, parity):
+def character_sum(q0, q1, parity):      # Lapkova 2018
     if parity == 'even':
-        number = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
+        number = (2/pi**2*sqrt(q1)*log(q1) + 0.9467*sqrt(q1)+ 1.668)
     if parity == 'odd':
-        number = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
+        number = (0.5/pi*sqrt(q1)*log(q1) + 0.8294*sqrt(q1)+ 1.0285)
     return number
 
 def error(A, tau, x, C1, C2):
