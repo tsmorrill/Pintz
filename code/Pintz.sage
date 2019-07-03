@@ -53,29 +53,20 @@ def error(A, tau, x, C1, C2):
 
     # Spitting sum
     D1 = x**tau*log(x)/2/x     # lead term of W
-    D2 = A*x**tau*log(x)/tau   # upper_sum
+    D2 = A*x**tau/tau*(log(x) - 1/tau) + A/tau**2   # upper_sum
     z = sqrt(D2/D1)            # minimize D1*z + D2/z
     z = min(z, x/2)
     W = (x**tau*log(x)/2*z/x
          + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
          + x**tau*(alpha*(alpha + 1)*log(x) + (3*alpha**2 + 6*alpha + 2)/(alpha + 2))
          /216/sqrt(3)*z/x*(z/x + 1/x)*(2*z/x + 1/x))
-    # upper_sum = A/z*x**tau*log(x)/tau
+    upper_sum_old = A/z*x**tau*log(x)/tau
 
-    upper_sum_old = A*log(x)/z**(1-tau)*(1 + 1/tau*(x/z)**(tau) - 1/tau)
+    # upper_sum_old = A*log(x)/z**(1-tau)*(1 + 1/tau*(x/z)**(tau) - 1/tau)
 
     upper_sum = A/z**(1-tau)*(log(z) + (x/z)**tau/tau*(log(x) - 1/tau) - (log(z) - 1/tau)/tau)
 
-    print(upper_sum.n())
-    print(upper_sum_old.n())
-
-    # Not splitting sum
-    # W = (x**tau*log(x)*(1/2 + (1-tau)/12 + (1-tau)*(2-tau)/36/sqrt(3))
-    #    + x**tau/36/sqrt(3)*((1-tau)*(2-tau)*log(x) + (3*(1-tau)**2 + 6*(1-tau) + 2)/(3-tau)))
-
-    # the_rest = minimize(W + upper_sum, [sqrt(A*x)])[0]
-
-    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
+    print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
 
     number = (three_six + three_seven + three_eight + W + upper_sum)
     return number
