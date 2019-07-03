@@ -1,5 +1,8 @@
 print("Siegel zeroes for primitive odd characters.")
 
+even = 'even'
+odd = 'odd'
+
 var('t')
 
 def error(A, tau, x, C1, C2):
