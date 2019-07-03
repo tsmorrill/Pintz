@@ -62,11 +62,17 @@ def error(A, tau, x, C1, C2):
     number = (three_six + three_seven + three_eight + W + upper_sum)
     return number
 
-def F(c, q0, q1, x):
+def character_sum(q0, q1, parity):
+    if parity == 'even':
+        number = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
+    if parity == 'odd':
+        number = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
+    return number
+
+def F(c, q0, q1, x, parity):
     """Calculate an upper bound for F on the interval [q0, q1] for fixed c and x."""
 
-    A = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
-    # A = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
+    A = character_sum(q0, q1, parity)
     tau = c/log(q1)
 
     alpha = 1 - tau
@@ -89,15 +95,14 @@ def F(c, q0, q1, x):
                       log(4)/4)
     return (float(error(A, tau, x, C1, C2) - L1 - lower_bound))
 
-def search(c, q0, q1, x0, x1, step):
+def search(c, q0, q1, x0, x1, step, parity):
     """Find an x on the interval [x0, x1] which minimizes F for c and q in [q0, q01],
     searching in increments of 10**step. Then, return the tuple (bool(F < 0), log(x, 10)).
     Returns None if the specified range and step size have no test values.
     """
 
     tau = c/log(q1)
-    A = sqrt(q1) * log(q1) * (pi**-2 + 0.5/log(q0))    # chi is even
-    # A = sqrt(q1) * log(q1) * (0.5/pi + 1/log(q0))    # chi is odd
+    A = character_sum(q0, q1, parity)
 
     x_min = max(x0, log((exp(1/(2*tau - 1)) + 1)**2, 10))    # lower bound from Lemma 4
     x_max = min(x1, log(q0^(1/c), 10))    # upper bound from (10)
@@ -139,7 +144,7 @@ def search(c, q0, q1, x0, x1, step):
 
     return(output, x)
 
-def best_c(q0, q1, significant_figures=2):
+def best_c(q0, q1, parity, significant_figures=2):
     """Calculate the maximal c so that F < 0 on the interval [q0, q1]."""
 
     c_true, c_step = 0, 1.0
@@ -152,7 +157,7 @@ def best_c(q0, q1, significant_figures=2):
         while it_works:
             x0, x1, step = 0, log(q0^(1/c), 10), 1
             for i in range(3):
-                result, x = search(c, q0, q1, x0, x1, step)
+                result, x = search(c, q0, q1, x0, x1, step, parity)
                 x0, x1, step = max(0, x - step), min(x1, x + step), step/10
                 if result:
                     it_works = True
@@ -183,7 +188,7 @@ def best_c(q0, q1, significant_figures=2):
 
     return(str1, str2)
 
-def best_q1(q0, c):
+def best_q1(q0, c, parity):
     """Calculate the maximal q1 so that F < 0 on the interval [q0, q1] for fixed c."""
     q1_true, q_step = q0, 10**int(log(q0, 10) + 4)
     done = False
@@ -193,7 +198,7 @@ def best_q1(q0, c):
         while it_works:
             x0, x1, step = 0, log(q0^(1/c), 10), 1
             for i in range(4):
-                result, x = search(c, q0, q1, x0, x1, step)
+                result, x = search(c, q0, q1, x0, x1, step, parity)
                 x0, x1, step = max(0, x - step), min(x1, x + step), step/10
                 if result:
                     it_works = True
@@ -210,14 +215,14 @@ def best_q1(q0, c):
     return(q1_true)
 
 
-def cq_table(q_list, significant_figures=4):
+def cq_table(q_list, parity, significant_figures=4):
     """Generate a table of c values corresponding to q_list formatted for LaTeX, then generate Sage
     commands to verify these calculations.
     """
     TeX_list, Sage_list = [], []
     for q0, q1 in zip(q_list[:-1], q_list[1:]):
         print(q0, q1)
-        TeX_str, Sage_str = best_c(q0, q1, significant_figures=significant_figures)
+        TeX_str, Sage_str = best_c(q0, q1, parity, significant_figures=significant_figures)
         print('====')
         TeX_list.append(TeX_str)
         Sage_list.append(Sage_str)
