@@ -56,17 +56,16 @@ def error(A, tau, x, C1, C2):
     D2 = A*x**tau/tau*(log(x) - 1/tau) + A/tau**2   # upper_sum
     z = sqrt(D2/D1)            # minimize D1*z + D2/z
     z = min(z, x/2)
+
     W = (x**tau*log(x)/2*z/x
          + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
          + x**tau*(alpha*(alpha + 1)*log(x) + (3*alpha**2 + 6*alpha + 2)/(alpha + 2))
          /216/sqrt(3)*z/x*(z/x + 1/x)*(2*z/x + 1/x))
+
     upper_sum_old = A/z*x**tau*log(x)/tau
-
-    # upper_sum_old = A*log(x)/z**(1-tau)*(1 + 1/tau*(x/z)**(tau) - 1/tau)
-
     upper_sum = A/z**(1-tau)*(log(z) + (x/z)**tau/tau*(log(x) - 1/tau) - (log(z) - 1/tau)/tau)
 
-    print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
+    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n(), upper_sum_old.n())
 
     number = (three_six + three_seven + three_eight + W + upper_sum)
     return number
@@ -112,7 +111,7 @@ def search(c, q0, q1, x0, x1, step, parity):
     values = []
 
     if not x_range:
-        return None
+        return (False, 10)   # x value should be ignored here
 
     alpha = 1 - tau
     C1 = (0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6
@@ -175,6 +174,7 @@ def best_c(q0, q1, parity, significant_figures=2):
             if current_figures == significant_figures:
                 done = True
         c_step /= 10
+        print('')
 
     q0_magnitude = int(log(q0, 10))
     q0_lead = round(q0/10**q0_magnitude, 2)
@@ -184,7 +184,6 @@ def best_c(q0, q1, parity, significant_figures=2):
     str1 = "${{{}}} \cdot 10^{{{}}}$ & ${{{}}} \cdot 10^{{{}}}$ & \\num{{{}}} & $10^{{{}}}$ \\\\".format(q0_lead, q0_magnitude, q1_lead, q1_magnitude, round(c_true,5), x_true)
     str2 = 'F({}, {}, {}, 10^{})'.format(c_true, q0, q1, x_true)
 
-    print('')
     print('c = {}.'.format(c_true))
     print('')
 
