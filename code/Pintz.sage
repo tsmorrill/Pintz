@@ -39,20 +39,11 @@ def error(q0, q1, A, tau, x, C1, C2):
     alpha = 1 - tau
 
     def H6(d):
-        return log(d)/d^(1-tau)
+        return d**tau/tau*(log(d) - 1/tau)
     def H7(d):
-        return 1/d^(1-tau)
+        return d**tau/tau
     def H8(d):
-        return 1/d
-
-    # h6(z) = |d/dz H6(z)| &c
-
-    def h6(d, tau):
-        return ((1-tau)*log(d) - 1)/d^(2-tau)
-    def h7(d, tau):
-        return (1 - tau)/d^(2-tau)
-    def h8(d, tau):
-        return d**(-2)
+        return log(d)
 
     K1 = abs(C1)
     K2 = abs(C2)
