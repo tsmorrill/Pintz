@@ -5,6 +5,17 @@ odd = 'odd'
 
 var('t')
 
+def constants(alpha):
+    C1 = (0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6
+      *numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
+                          /t**(alpha + 3), 1, Infinity)[0])
+    C2 = 11/12 + (1/(1 - alpha)^2 + 1/6*numerical_integral(
+                   (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
+                    *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
+                    /t**(alpha+3), 1, Infinity)[0])
+    print(C1, C2)
+    return(C1, C2)
+
 def character_sum(q0, q1, parity):      # Lapkova 2018
     if parity == 'even':
         number = (2/pi**2*sqrt(q1)*log(q1) + 0.9467*sqrt(q1)+ 1.668)
@@ -66,7 +77,7 @@ def error(A, tau, x, C1, C2):
     upper_sum_old = A/z*x**tau*log(x)/tau
     upper_sum = A/z**(1-tau)*(log(z) + (x/z)**tau/tau*(log(x) - 1/tau) - (log(z) - 1/tau)/tau)
 
-    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n(), upper_sum_old.n())
+    print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n(), upper_sum_old.n())
 
     number = (three_six + three_seven + three_eight + W + upper_sum)
     return number
@@ -78,13 +89,7 @@ def F(c, q0, q1, x, parity):
     tau = c/log(q1)
 
     alpha = 1 - tau
-    C1 = (0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6
-         *numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
-                             /t**(alpha + 3), 1, Infinity)[0])
-    C2 = (11/12 + (1 - alpha)**-2 + 1/6*numerical_integral(
-          (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha + 2)*log(t))
-          *(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
-          /t**(alpha+3), 1, Infinity)[0])
+    C1, C2 = constants(alpha)
 
     if q0 <= 10**7:
         Bennet = 79.2
@@ -115,13 +120,7 @@ def search(c, q0, q1, x0, x1, step, parity):
         return (False, 10)   # x value should be ignored here
 
     alpha = 1 - tau
-    C1 = (0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6
-          *numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
-                              /t**(alpha + 3), 1, Infinity)[0])
-    C2 = 11/12 + (1/(1 - alpha)^2 + 1/6*numerical_integral(
-                       (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
-                        *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
-                        /t**(alpha+3), 1, Infinity)[0])
+    C1, C2 = constants(alpha)
 
     for log_x in x_range:
         x = 10^log_x
