@@ -94,9 +94,9 @@ def error(q0, q1, A, tau, x, C1, C2):
     else:
         Bennet = 12
 
-    L1 = (1/tau - log(x))*Bennet*x^tau/tau/sqrt(q1)
+    L1 = (1/tau - log(z))*Bennet*z^tau/tau/sqrt(q1)
     lower_bound = max(-2*zetaderiv(1, 2-2*tau)
-                      -2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2,
+                      -2*(1 + (0.5 - tau)*log(z))/z^(0.5 - tau)/(1 - 2*tau)^2,
                       log(4)/4)
 
     number = (three_six + three_seven + three_eight + W + upper_sum
