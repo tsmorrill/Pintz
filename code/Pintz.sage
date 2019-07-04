@@ -183,7 +183,7 @@ def best_c(q0, q1, parity, significant_figures=2):
     q1_lead = round(q1/10**q1_magnitude, 2)
 
     str1 = "${{{}}} \cdot 10^{{{}}}$ & ${{{}}} \cdot 10^{{{}}}$ & \\num{{{}}} & $10^{{{}}}$ \\\\".format(q0_lead, q0_magnitude, q1_lead, q1_magnitude, round(c_true,5), x_true)
-    str2 = 'F({}, {}, {}, 10^{})'.format(c_true, q0, q1, x_true)
+    str2 = 'F({}, {}, {}, 10^{}, {})'.format(c_true, q0, q1, x_true, parity)
 
     print('c = {}.'.format(c_true))
     print('')
