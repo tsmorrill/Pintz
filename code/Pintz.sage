@@ -61,6 +61,7 @@ def error(A, tau, x, C1, C2):
     z = sqrt(D2/D1)            # minimize D1*z + D2/z
     z *= 1
     z = min(z, x/2)
+    z = x/3
 
     three_six = three_seven = three_eight = Infinity  # Initialize
 
