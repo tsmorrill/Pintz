@@ -89,7 +89,7 @@ def error(q0, q1, A, tau, x, C1, C2):
 
     # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
 
-    if q0 <= 10**7:
+    if 4e5 <= q0 and q1 <= 1e7:
         Bennet = 79.2
     else:
         Bennet = 12
