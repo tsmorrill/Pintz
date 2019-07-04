@@ -5,7 +5,17 @@ odd = 'odd'
 
 var('t')
 
+def character_sum(q0, q1, parity):      # Lapkova 2018
+    """Calculate upper bound for sum of Dirichlet characters of modulus q0 <= q <= q1."""
+    if parity == 'even':
+        number = (2/pi**2*sqrt(q1)*log(q1) + 0.9467*sqrt(q1)+ 1.668)
+    if parity == 'odd':
+        number = (0.5/pi*sqrt(q1)*log(q1) + 0.8294*sqrt(q1)+ 1.0285)
+    return number
+
 def constants(alpha):
+    """Calculate constants related to Euler-Maclaurin summation for n**-alpha
+    and n**-alpha*log(n)."""
     def B3(t):                # Third Bernoulli polynomial
         t = frac(t)
         number = t**3 - 1.5*t**2 + 0.5*t
@@ -22,13 +32,6 @@ def constants(alpha):
 
     # print(C1, C2)
     return(C1, C2)
-
-def character_sum(q0, q1, parity):      # Lapkova 2018
-    if parity == 'even':
-        number = (2/pi**2*sqrt(q1)*log(q1) + 0.9467*sqrt(q1)+ 1.668)
-    if parity == 'odd':
-        number = (0.5/pi*sqrt(q1)*log(q1) + 0.8294*sqrt(q1)+ 1.0285)
-    return number
 
 def error(q0, q1, A, tau, x, C1, C2):
     """Calculate F on the interval [q0, q1] for precomputed A, tau, C1, C2."""
@@ -62,27 +65,11 @@ def error(q0, q1, A, tau, x, C1, C2):
     z *= 1
     z = min(z, x/2)
 
-    three_six = three_seven = three_eight = Infinity  # Initialize
+    # Bordingon 2019
 
-    if z <= A:                   # trivial bound
-        three_six = K1*(2*z*H6(z, tau) + numerical_integral(h6(t, tau), z, A)[0])
-    three_six = min(three_six, K1*A*log(z)/z^(1-tau))
-
-    if z <= A:                   # trivial bound
-        three_seven = K2*(2*z*H7(z, tau) + numerical_integral(h7(t, tau), z, A)[0])
-    three_seven = min(three_seven, K2*A/z^(1-tau))
-
-    if z <= A:                   # trivial bound
-        three_eight = K3*(2*z*H8(z, tau) + numerical_integral(h8(t, tau), z, A)[0])
-    three_eight = min(three_eight, K3*A/z)
-
-    Bordignon6 = H6(A + z + 1, tau) - H6(z, tau)
-    Bordignon7 = H7(A + z + 1, tau) - H7(z, tau)
-    Bordignon8 = H8(A + z + 1, tau) - H8(z, tau)
-
-    three_six = Bordignon6
-    three_seven = Bordignon7
-    three_eight = Bordignon8
+    L_error1 = H6(A + z + 1, tau) - H6(z, tau)
+    L_error2 = H7(A + z + 1, tau) - H7(z, tau)
+    L_error3 = H8(A + z + 1, tau) - H8(z, tau)
 
     W = (x**tau*log(x)/2*z/x
          + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
@@ -104,7 +91,7 @@ def error(q0, q1, A, tau, x, C1, C2):
                       -2*(1 + (0.5 - tau)*log(z))/z^(0.5 - tau)/(1 - 2*tau)^2,
                       log(4)/4)
 
-    number = (three_six + three_seven + three_eight + W + upper_sum
+    number = (L_error1 + L_error2 + L_error3 + W + upper_sum
               - L1 - lower_bound)
     return number
 
