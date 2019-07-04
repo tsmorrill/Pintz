@@ -76,9 +76,9 @@ def error(q0, q1, A, tau, x, C1, C2):
         three_eight = K3*(2*z*H8(z, tau) + numerical_integral(h8(t, tau), z, A)[0])
     three_eight = min(three_eight, K3*A/z)
 
-    Bordignon6 = h6(1, tau) + H6(A, tau) - H6(1, tau)
-    Bordignon7 = h7(1, tau) + H7(A, tau) - H7(1, tau)
-    Bordignon8 = h8(1, tau) + H8(A, tau) - H8(1, tau)
+    Bordignon6 = H6(A + z + 1, tau) - H6(z, tau)
+    Bordignon7 = H7(A + z + 1, tau) - H7(z, tau)
+    Bordignon8 = H8(A + z + 1, tau) - H8(z, tau)
 
     three_six = Bordignon6
     three_seven = Bordignon7
