@@ -6,21 +6,19 @@ odd = 'odd'
 var('t')
 
 def constants(alpha):
-    def B4(t):                # Fourth Bernoulli polynomial
+    def B3(t):                # Third Bernoulli polynomial
         t = frac(t)
-        number = t**4 - 2*t**3 + t**2 - 1/30
+        number = t**3 - 1.5*t**2 + 0.5*t
         return number
 
-    integral1 = -(alpha*(alpha + 1)*(alpha + 2)*(alpha + 3)/24
-                  *numerical_integral(B4(t)/t**(alpha + 4), 1, Infinity)[0])
-    integral2 = -1/24*numerical_integral(B4(t)/t**(alpha + 4)
-                   *(alpha*(alpha+1)*(alpha+2)*(alpha+3)*log(t)
-                     -2*(2*alpha**3 + 9*alpha**2 + 11*alpha + 3)), 1, Infinity)[0]
+    integral1 = -(alpha*(alpha + 1)*(alpha + 2)/6
+                  *numerical_integral(B3(t)/t**(alpha + 3), 1, Infinity)[0])
+    integral2 = 1/6*numerical_integral(B3(t)/t**(alpha + 3)
+                   *(alpha*(alpha+1)*(alpha+2)*log(t)
+                     + 3*alpha**2 + 6*alpha + 2), 1, Infinity)[0]
 
-    C1 = (0.5 + alpha/12 - 1/(1-alpha)
-          - alpha*(alpha+1)*(alpha+2)/720 + integral1)
-    C2 = (11/12 + 1/(1 - alpha)**2
-          -2*(2*alpha**3 + 9*alpha**2 + 11*alpha + 3)/720 + integral2)
+    C1 = (0.5 + alpha/12 - 1/(1-alpha) + integral1)
+    C2 = (11/12 + 1/(1 - alpha)**2 + integral2)
 
     # print(C1, C2)
     return(C1, C2)
@@ -63,7 +61,6 @@ def error(q0, q1, A, tau, x, C1, C2):
     z = sqrt(D2/D1)            # minimize D1*z + D2/z
     z *= 1
     z = min(z, x/2)
-    # z = x/3
 
     three_six = three_seven = three_eight = Infinity  # Initialize
 
@@ -78,6 +75,14 @@ def error(q0, q1, A, tau, x, C1, C2):
     if z <= A:                   # trivial bound
         three_eight = K3*(2*z*H8(z, tau) + numerical_integral(h8(t, tau), z, A)[0])
     three_eight = min(three_eight, K3*A/z)
+
+    Bordignon6 = h6(1, tau) + H6(A, tau) - H6(1, tau)
+    Bordignon7 = h7(1, tau) + H7(A, tau) - H7(1, tau)
+    Bordignon8 = h8(1, tau) + H8(A, tau) - H8(1, tau)
+
+    three_six = Bordignon6
+    three_seven = Bordignon7
+    three_eight = Bordignon8
 
     W = (x**tau*log(x)/2*z/x
          + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
