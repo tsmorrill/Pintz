@@ -37,26 +37,26 @@ def error(A, tau, x, C1, C2):
     K2 = abs(C2)
     K3 = abs(x^tau/tau*(1/tau - log(x)))
 
-    three_six = three_seven = three_eight = Infinity  # Initialize
-
-    if x <= A:                   # trivial bound
-        three_six = K1*(2*x*H6(x, tau) + numerical_integral(h6(t, tau), x, A)[0])
-    three_six = min(three_six, K1*A*log(x)/x^(1-tau))
-
-    if x <= A:                   # trivial bound
-        three_seven = K2*(2*x*H7(x, tau) + numerical_integral(h7(t, tau), x, A)[0])
-    three_seven = min(three_seven, K2*A/x^(1-tau))
-
-    if x <= A:                   # trivial bound
-        three_eight = K3*(2*x*H8(x, tau) + numerical_integral(h8(t, tau), x, A)[0])
-    three_eight = min(three_eight, K3*A/x)
-
     # Spitting sum
     D1 = x**tau*log(x)/2/x     # lead term of W
     D2 = A*x**tau/tau*(log(x) - 1/tau) + A/tau**2   # upper_sum
     z = sqrt(D2/D1)            # minimize D1*z + D2/z
     z = min(z, x/2)
     z *= 0.8
+
+    three_six = three_seven = three_eight = Infinity  # Initialize
+
+    if z <= A:                   # trivial bound
+        three_six = K1*(2*z*H6(z, tau) + numerical_integral(h6(t, tau), z, A)[0])
+    three_six = min(three_six, K1*A*log(z)/z^(1-tau))
+
+    if z <= A:                   # trivial bound
+        three_seven = K2*(2*z*H7(z, tau) + numerical_integral(h7(t, tau), z, A)[0])
+    three_seven = min(three_seven, K2*A/z^(1-tau))
+
+    if z <= A:                   # trivial bound
+        three_eight = K3*(2*z*H8(z, tau) + numerical_integral(h8(t, tau), z, A)[0])
+    three_eight = min(three_eight, K3*A/z)
 
     W = (x**tau*log(x)/2*z/x
          + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
