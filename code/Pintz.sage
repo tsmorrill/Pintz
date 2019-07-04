@@ -32,7 +32,7 @@ def character_sum(q0, q1, parity):      # Lapkova 2018
         number = (0.5/pi*sqrt(q1)*log(q1) + 0.8294*sqrt(q1)+ 1.0285)
     return number
 
-def error(A, tau, x, C1, C2):
+def error(q0, q1, A, tau, x, C1, C2):
     """Calculate E(q, tau, x) for precomputed A, tau, C1, C2."""
 
     alpha = 1 - tau
@@ -89,7 +89,18 @@ def error(A, tau, x, C1, C2):
 
     # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
 
-    number = (three_six + three_seven + three_eight + W + upper_sum)
+    if q0 <= 10**7:
+        Bennet = 79.2
+    else:
+        Bennet = 12
+
+    L1 = (1/tau - log(x))*Bennet*x^tau/tau/sqrt(q1)
+    lower_bound = max(-2*zetaderiv(1, 2-2*tau)
+                      -2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2,
+                      log(4)/4)
+
+    number = (three_six + three_seven + three_eight + W + upper_sum
+              - L1 - lower_bound)
     return number
 
 def F(c, q0, q1, x, parity):
@@ -101,16 +112,9 @@ def F(c, q0, q1, x, parity):
     alpha = 1 - tau
     C1, C2 = constants(alpha)
 
-    if q0 <= 10**7:
-        Bennet = 79.2
-    else:
-        Bennet = 12
+    number = error(q0, q1, A, tau, x, C1, C2)
 
-    L1 = (1/tau - log(x))*Bennet*x^tau/tau/sqrt(q1)
-    lower_bound = max(-2*zetaderiv(1, 2-2*tau)
-                      -2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2,
-                      log(4)/4)
-    return (float(error(A, tau, x, C1, C2) - L1 - lower_bound))
+    return (float(number))
 
 def search(c, q0, q1, x0, x1, step, parity):
     """Find an x on the interval [x0, x1] which minimizes F for c and q in [q0, q01],
@@ -134,22 +138,8 @@ def search(c, q0, q1, x0, x1, step, parity):
 
     for log_x in x_range:
         x = 10^log_x
-        if q0 <= 10**7:
-            Bennet = 79.2
-        else:
-            Bennet = 12
-
-        E = error(A, tau, x, C1, C2)
-        L1 = (1/tau - log(x))*Bennet*x^tau/tau/sqrt(q1)
-        lower_bound = max(-2*zetaderiv(1, 2-2*tau)
-                              -2*(1 + (0.5 - tau)*log(x))/x^(0.5 - tau)/(1 - 2*tau)^2,
-                              log(4)/4)
-
-        # print('E = {}'.format(E.n()))
-        # print('L1 = {}'.format(-L1.n()))
-        # print('lower_bound = {}'.format(-lower_bound.n()))
-
-        values.append((float(E - L1 - lower_bound), log_x))
+        number = error(q0, q1, A, tau, x, C1, C2)
+        values.append((float(number), log_x))
     F, x = (float(i) for i in min(values))
     output = (F < 0)
 
