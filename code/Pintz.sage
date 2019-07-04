@@ -76,8 +76,8 @@ def error(q0, q1, A, tau, x, C1, C2):
          + x**tau*(alpha*(alpha + 1)*log(x) + (3*alpha**2 + 6*alpha + 2)/(alpha + 2))
          /216/sqrt(3)*z/x*(z/x + 1/x)*(2*z/x + 1/x))
 
-    upper_sum_old = A/z*x**tau*log(x)/tau
-    upper_sum = A/z**(1-tau)*(log(z) + (x/z)**tau/tau*(log(x) - 1/tau) - (log(z) - 1/tau)/tau)
+    upper_sum = A/z**(1-tau)*(log(z) + (x/z)**tau/tau*(log(x) - 1/tau)
+                              - (log(z) - 1/tau)/tau)
 
     # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
 
