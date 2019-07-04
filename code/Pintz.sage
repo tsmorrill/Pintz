@@ -38,11 +38,11 @@ def error(q0, q1, A, tau, x, C1, C2):
 
     alpha = 1 - tau
 
-    def H6(d, tau):
+    def H6(d):
         return log(d)/d^(1-tau)
-    def H7(d, tau):
+    def H7(d):
         return 1/d^(1-tau)
-    def H8(d, tau):
+    def H8(d):
         return 1/d
 
     # h6(z) = |d/dz H6(z)| &c
@@ -67,9 +67,9 @@ def error(q0, q1, A, tau, x, C1, C2):
 
     # Bordingon 2019
 
-    L_error1 = H6(A + z + 1, tau) - H6(z, tau)
-    L_error2 = H7(A + z + 1, tau) - H7(z, tau)
-    L_error3 = H8(A + z + 1, tau) - H8(z, tau)
+    L_error1 = H6(A + z + 1) - H6(z)
+    L_error2 = H7(A + z + 1) - H7(z)
+    L_error3 = H8(A + z + 1) - H8(z)
 
     W = (x**tau*log(x)/2*z/x
          + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
