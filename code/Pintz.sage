@@ -6,13 +6,12 @@ odd = 'odd'
 var('t')
 
 def constants(alpha):
-    def Bernoulli4(t):
+    def B4(t):                # Fourth Bernoulli polynomial
         t = frac(t)
         number = t**4 - 2*t**3 + t**2 - 1/30
         return number
-    integral1 = - (alpha*(alpha + 1)*(alpha + 2)/6
-                   *numerical_integral((frac(t)**3-1.5*frac(t)**2+0.5*frac(t))
-                          /t**(alpha + 3), 1, Infinity)[0])
+    integral1 = -(alpha*(alpha + 1)*(alpha + 2)*(alpha + 3)/24
+                  *numerical_integral(B4(t)/t**(alpha + 3), 1, Infinity)[0])
     integral2 = 1/6*numerical_integral(
                    (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
                     *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
