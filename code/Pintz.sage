@@ -13,7 +13,7 @@ def constants(alpha):
                    (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
                     *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
                     /t**(alpha+3), 1, Infinity)[0])
-    print(C1, C2)
+    # print(C1, C2)
     return(C1, C2)
 
 def character_sum(q0, q1, parity):      # Lapkova 2018
@@ -77,7 +77,7 @@ def error(A, tau, x, C1, C2):
     upper_sum_old = A/z*x**tau*log(x)/tau
     upper_sum = A/z**(1-tau)*(log(z) + (x/z)**tau/tau*(log(x) - 1/tau) - (log(z) - 1/tau)/tau)
 
-    print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n(), upper_sum_old.n())
+    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n(), upper_sum_old.n())
 
     number = (three_six + three_seven + three_eight + W + upper_sum)
     return number
@@ -145,8 +145,10 @@ def search(c, q0, q1, x0, x1, step, parity):
 
     return(output, x)
 
-def best_c(q0, q1, parity, significant_figures=2):
+def best_c(q0, q1, parity='even', significant_figures=2):
     """Calculate the maximal c so that F < 0 on the interval [q0, q1]."""
+
+    print('Sigel zeroes for {} characters'.format(parity))
 
     c_true, c_step = 0, 1.0
     record_significant_figures, current_figures = False, 0
