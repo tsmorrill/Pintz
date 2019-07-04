@@ -33,7 +33,7 @@ def character_sum(q0, q1, parity):      # Lapkova 2018
     return number
 
 def error(q0, q1, A, tau, x, C1, C2):
-    """Calculate E(q, tau, x) for precomputed A, tau, C1, C2."""
+    """Calculate F on the interval [q0, q1] for precomputed A, tau, C1, C2."""
 
     alpha = 1 - tau
 
