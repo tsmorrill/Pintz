@@ -93,10 +93,8 @@ def F(c, q0, q1, x, parity):
 
     A = character_sum(q0, q1, parity)
     tau = c/log(q1)
-
     alpha = 1 - tau
     C1, C2 = constants(alpha)
-
     number = error(q0, q1, A, tau, x, C1, C2)
 
     return (float(number))
@@ -209,7 +207,7 @@ def cq_table(q_list, parity, significant_figures=4):
     """Generate a table of c values corresponding to q_list formatted for LaTeX, then generate Sage
     commands to verify these calculations.
     """
-    
+
     TeX_list, Sage_list = [], []
     for q0, q1 in zip(q_list[:-1], q_list[1:]):
         print(q0, q1)
