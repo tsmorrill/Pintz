@@ -22,7 +22,7 @@ def constants(alpha):
     C2 = (11/12 + 1/(1 - alpha)**2
           -2*(2*alpha**3 + 9*alpha**2 + 11*alpha + 3)/720 + integral2)
 
-    print(C1, C2)
+    # print(C1, C2)
     return(C1, C2)
 
 def character_sum(q0, q1, parity):      # Lapkova 2018
@@ -149,6 +149,7 @@ def best_c(q0, q1, parity='even', significant_figures=2):
     """Calculate the maximal c so that F < 0 on the interval [q0, q1]."""
 
     print('Sigel zeroes for {} characters'.format(parity))
+    print('')
 
     c_true, c_step = 0, 1.0
     record_significant_figures, current_figures = False, 0
