@@ -7,6 +7,7 @@ var('t')
 
 def character_sum(q0, q1, parity):      # Lapkova 2018
     """Calculate upper bound for sum of Dirichlet characters of modulus q0 <= q <= q1."""
+
     if parity == 'even':
         number = (2/pi**2*sqrt(q1)*log(q1) + 0.9467*sqrt(q1)+ 1.668)
     if parity == 'odd':
@@ -16,6 +17,7 @@ def character_sum(q0, q1, parity):      # Lapkova 2018
 def constants(alpha):
     """Calculate constants related to Euler-Maclaurin summation for n**-alpha
     and n**-alpha*log(n)."""
+
     def B3(t):                # Third Bernoulli polynomial
         t = frac(t)
         number = t**3 - 1.5*t**2 + 0.5*t
@@ -177,6 +179,7 @@ def best_c(q0, q1, parity='even', significant_figures=2):
 
 def best_q1(q0, c, parity):
     """Calculate the maximal q1 so that F < 0 on the interval [q0, q1] for fixed c."""
+
     q1_true, q_step = q0, 10**int(log(q0, 10) + 4)
     done = False
     while not done:
@@ -206,6 +209,7 @@ def cq_table(q_list, parity, significant_figures=4):
     """Generate a table of c values corresponding to q_list formatted for LaTeX, then generate Sage
     commands to verify these calculations.
     """
+    
     TeX_list, Sage_list = [], []
     for q0, q1 in zip(q_list[:-1], q_list[1:]):
         print(q0, q1)
