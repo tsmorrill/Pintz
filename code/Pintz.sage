@@ -6,13 +6,15 @@ odd = 'odd'
 var('t')
 
 def constants(alpha):
-    C1 = (0.5 + alpha/12 - 1/(1-alpha) - alpha*(alpha + 1)*(alpha + 2)/6
-      *numerical_integral((frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
+    integral1 = - (alpha*(alpha + 1)*(alpha + 2)/6
+                   *numerical_integral((frac(t)**3-1.5*frac(t)**2+0.5*frac(t))
                           /t**(alpha + 3), 1, Infinity)[0])
-    C2 = 11/12 + (1/(1 - alpha)^2 + 1/6*numerical_integral(
+    integral2 = 1/6*numerical_integral(
                    (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
                     *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
-                    /t**(alpha+3), 1, Infinity)[0])
+                    /t**(alpha+3), 1, Infinity)[0]
+    C1 = (0.5 + alpha/12 - 1/(1-alpha) + integral1)
+    C2 = 11/12 + (1/(1 - alpha)^2 + integral2)
     # print(C1, C2)
     return(C1, C2)
 
@@ -52,8 +54,8 @@ def error(A, tau, x, C1, C2):
     D1 = x**tau*log(x)/2/x     # lead term of W
     D2 = A*x**tau/tau*(log(x) - 1/tau) + A/tau**2   # upper_sum
     z = sqrt(D2/D1)            # minimize D1*z + D2/z
+    z *= 1
     z = min(z, x/2)
-    z *= 0.8
 
     three_six = three_seven = three_eight = Infinity  # Initialize
 
@@ -77,7 +79,7 @@ def error(A, tau, x, C1, C2):
     upper_sum_old = A/z*x**tau*log(x)/tau
     upper_sum = A/z**(1-tau)*(log(z) + (x/z)**tau/tau*(log(x) - 1/tau) - (log(z) - 1/tau)/tau)
 
-    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n(), upper_sum_old.n())
+    print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
 
     number = (three_six + three_seven + three_eight + W + upper_sum)
     return number
