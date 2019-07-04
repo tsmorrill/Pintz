@@ -10,15 +10,17 @@ def constants(alpha):
         t = frac(t)
         number = t**4 - 2*t**3 + t**2 - 1/30
         return number
+
     integral1 = -(alpha*(alpha + 1)*(alpha + 2)*(alpha + 3)/24
-                  *numerical_integral(B4(t)/t**(alpha + 3), 1, Infinity)[0])
-    integral2 = 1/6*numerical_integral(
-                   (2 + 6*alpha + 3*alpha^2 - alpha*(alpha + 1)*(alpha +  2)
-                    *log(t))*(frac(t)**3 - 1.5*frac(t)**2 + 0.5*frac(t))
-                    /t**(alpha+3), 1, Infinity)[0]
+                  *numerical_integral(B4(t)/t**(alpha + 4), 1, Infinity)[0])
+    integral2 = -1/24*numerical_integral(B4(t)/t**(alpha + 4)
+                   *(alpha*(alpha+1)*(alpha+2)*(alpha+3)*log(t)
+                     -2*(2*alpha**3 + 9*alpha**2 + 11*alpha + 3)), 1, Infinity)[0]
+
     C1 = (0.5 + alpha/12 - 1/(1-alpha) + integral1)
     C2 = 11/12 + (1/(1 - alpha)^2 + integral2)
-    # print(C1, C2)
+
+    print(C1, C2)
     return(C1, C2)
 
 def character_sum(q0, q1, parity):      # Lapkova 2018
@@ -82,7 +84,7 @@ def error(A, tau, x, C1, C2):
     upper_sum_old = A/z*x**tau*log(x)/tau
     upper_sum = A/z**(1-tau)*(log(z) + (x/z)**tau/tau*(log(x) - 1/tau) - (log(z) - 1/tau)/tau)
 
-    print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
+    # print(three_six.n(), three_seven.n(), three_eight.n(), W.n(), upper_sum.n())
 
     number = (three_six + three_seven + three_eight + W + upper_sum)
     return number
