@@ -245,20 +245,24 @@ def cq_table(q_list, significant_figures=4):
     commands to verify these calculations.
     """
 
-    TeX_list = even_list = odd_list = []
+    TeX_list, even_list, odd_list = [], [], []
     for q0, q1 in zip(q_list[:-1], q_list[1:]):
         print(q0, q1)
-        TeX_string, even_string, odd_string = best_c(q0, q1, significant_figures=significant_figures)
+        (TeX_string, even_string, odd_string) = best_c(q0, q1, significant_figures=significant_figures)
         print('====')
         TeX_list.append(TeX_string)
         even_list.append(even_string)
         odd_list.append(odd_string)
+
     print('')
-    for item in TeX_list:
-        print(item)
+    print('LaTeX Table:')
+    for TeX_string in TeX_list:
+        print(TeX_string)
     print('')
-    for item in even_list:
-        print(item)
+    print('Verification for even characters:')
+    for even_string in even_list:
+            print(even_string)
     print('')
-    for item in odd_list:
-        print(item)
+    print('Verification for odd characters:')
+    for odd_string in odd_list:
+        print(odd_string)
