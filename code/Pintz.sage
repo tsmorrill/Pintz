@@ -58,7 +58,7 @@ def error(q0, q1, A, tau, x, C1, C2):
     z *= 1
     z = min(z, x/2)
 
-    # Bordingon 2019
+    # Bordignon 2019
 
     L_error1 = H6(A + z + 1) - H6(z)
     L_error2 = H7(A + z + 1) - H7(z)
@@ -77,7 +77,7 @@ def error(q0, q1, A, tau, x, C1, C2):
     if 4e5 <= q0 and q1 <= 1e7:
         Bennet = 79.2
     else:
-        Bennet = 12
+        Bennet = 12.52    # Bordignon
 
     L1 = (1/tau - log(z))*Bennet*z^tau/tau/sqrt(q1)
     lower_bound = max(-2*zetaderiv(1, 2-2*tau)
@@ -220,7 +220,6 @@ def cq_table(q_list, significant_figures=4):
 
     TeX_list, even_list, odd_list = [], [], []
     for q0, q1 in zip(q_list[:-1], q_list[1:]):
-        print(q0, q1)
         (TeX_string, even_string, odd_string) = best_c(q0, q1, significant_figures=significant_figures)
         print('====')
         TeX_list.append(TeX_string)
