@@ -245,10 +245,10 @@ def cq_table(q_list, parity, significant_figures=4):
     TeX_list, Sage_list = [], []
     for q0, q1 in zip(q_list[:-1], q_list[1:]):
         print(q0, q1)
-        TeX_str, Sage_str = best_c(q0, q1, parity, significant_figures=significant_figures)
+        TeX_string, even_string, odd_string = best_c(q0, q1, parity, significant_figures=significant_figures)
         print('====')
         TeX_list.append(TeX_str)
-        Sage_list.append(Sage_str)
+        Sage_list.append(even_string, odd_string)
     for item in TeX_list:
         print(item)
     for item in Sage_list:
