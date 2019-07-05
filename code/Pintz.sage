@@ -203,9 +203,12 @@ def best_c(q0, q1, significant_figures=2):
     c_even, c_odd = round(c_even, 5), round(c_odd, 5)
 
     TeX_string = "${{{}}} \cdot 10^{{{}}}$ & ${{{}}} \cdot 10^{{{}}}$ & \\num{{{}}} & $10^{{{}}}$  & \\num{{{}}} & $10^{{{}}}$  \\\\".format(q0_lead, q0_magnitude, q1_lead, q1_magnitude, c_even, x_even, c_odd, x_odd)
-    even_string = 'F({}, {}, {}, 10^{}, {})'.format(c_true, q0, q1, x_true, parity)
-    odd_string = 'F({}, {}, {}, 10^{}, {})'.format(c_true, q0, q1, x_true, parity)
+    even_string = 'F({}, {}, {}, 10^{}, {})'.format(c_even, q0, q1, x_even, parity)
+    odd_string = 'F({}, {}, {}, 10^{}, {})'.format(c_odd, q0, q1, x_odd, parity)
 
+    print('')
+    print('For even chi, c = {}.'.format(c_even))
+    print('For odd chi,  c = {}.'.format(c_odd))
     print('')
     return(TeX_string, even_string, odd_string)
 
@@ -237,19 +240,25 @@ def best_q1(q0, c, parity):
     return(q1_true)
 
 
-def cq_table(q_list, parity, significant_figures=4):
+def cq_table(q_list, significant_figures=4):
     """Generate a table of c values corresponding to q_list formatted for LaTeX, then generate Sage
     commands to verify these calculations.
     """
 
-    TeX_list, Sage_list = [], []
+    TeX_list = even_list = odd_list = []
     for q0, q1 in zip(q_list[:-1], q_list[1:]):
         print(q0, q1)
-        TeX_string, even_string, odd_string = best_c(q0, q1, parity, significant_figures=significant_figures)
+        TeX_string, even_string, odd_string = best_c(q0, q1, significant_figures=significant_figures)
         print('====')
-        TeX_list.append(TeX_str)
-        Sage_list.append(even_string, odd_string)
+        TeX_list.append(TeX_string)
+        even_list.append(even_string)
+        odd_list.append(odd_string)
+    print('')
     for item in TeX_list:
         print(item)
-    for item in Sage_list:
+    print('')
+    for item in even_list:
+        print(item)
+    print('')
+    for item in odd_list:
         print(item)
