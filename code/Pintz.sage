@@ -53,7 +53,7 @@ def error(q0, q1, A, tau, x, C1, C2):
 
     # Spitting sum
     D1 = x**tau*log(x)/2/x     # lead term of W
-    D2 = A*x**tau/tau*(log(x) - 1/tau) + A/tau**2   # upper_sum
+    D2 =A/tau**2   # upper_sum
     z = sqrt(D2/D1)            # minimize D1*z + D2/z
     z *= 1
     z = min(z, x/2)
