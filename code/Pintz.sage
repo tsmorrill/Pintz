@@ -163,37 +163,37 @@ def best_c(q0, q1, significant_figures=2):
         c_step /= 10
         print('')
 
-        parity = 'odd'
-        print('Sigel zeroes for odd characters.')
+    parity = 'odd'
+    print('Sigel zeroes for odd characters.')
+    print('')
+
+    c_odd, c_step = 0, 1.0
+    record_significant_figures, current_figures = False, 0
+    done = False
+
+    while not done:
+        print('Trying increments of {}.'.format(c_step))
+        c, it_works = c_odd + c_step, True
+        while it_works:
+            x0, x1, step = 0, log(q0^(1/c), 10), 1
+            for i in range(3):
+                result, x = search(c, q0, q1, x0, x1, step, parity)
+                x0, x1, step = max(0, x - step), min(x1, x + step), step/10
+                if result:
+                    it_works = True
+                    record_significant_figures = True
+                    x_odd, c_odd = x, c
+                    print("q in [{}, {}], c >= {}.".format(q0, q1, c_odd))
+                    c += c_step
+                    break
+                else:
+                    it_works = False
+        if record_significant_figures == True:
+            current_figures += 1
+            if current_figures == significant_figures:
+                done = True
+        c_step /= 10
         print('')
-
-        c_odd, c_step = 0, 1.0
-        record_significant_figures, current_figures = False, 0
-        done = False
-
-        while not done:
-            print('Trying increments of {}.'.format(c_step))
-            c, it_works = c_odd + c_step, True
-            while it_works:
-                x0, x1, step = 0, log(q0^(1/c), 10), 1
-                for i in range(3):
-                    result, x = search(c, q0, q1, x0, x1, step, parity)
-                    x0, x1, step = max(0, x - step), min(x1, x + step), step/10
-                    if result:
-                        it_works = True
-                        record_significant_figures = True
-                        x_odd, c_odd = x, c
-                        print("q in [{}, {}], c >= {}.".format(q0, q1, c_odd))
-                        c += c_step
-                        break
-                    else:
-                        it_works = False
-            if record_significant_figures == True:
-                current_figures += 1
-                if current_figures == significant_figures:
-                    done = True
-            c_step /= 10
-            print('')
 
     q0_magnitude = int(log(q0, 10))
     q0_lead = round(q0/10**q0_magnitude, 2)
