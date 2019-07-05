@@ -212,33 +212,6 @@ def best_c(q0, q1, significant_figures=2):
     print('')
     return(TeX_string, even_string, odd_string)
 
-def best_q1(q0, c, parity):
-    """Calculate the maximal q1 so that F < 0 on the interval [q0, q1] for fixed c."""
-
-    q1_true, q_step = q0, 10**int(log(q0, 10) + 4)
-    done = False
-    while not done:
-        q1, it_works = q1_true + q_step, True
-        q1 = int(q1/10**int(log(q1, 10)-1))*10**int(log(q1, 10))
-        while it_works:
-            x0, x1, step = 0, log(q0^(1/c), 10), 1
-            for i in range(4):
-                result, x = search(c, q0, q1, x0, x1, step, parity)
-                x0, x1, step = max(0, x - step), min(x1, x + step), step/10
-                if result:
-                    it_works = True
-                    record_significant_figures = True
-                    x_true, q1_true = x, q1
-                    print("q1 >= {}.".format(q1_true))
-                    q1 += q_step
-                else:
-                    it_works = False
-        q_step /= 10
-        done = (int(log(q_step, 10)) <= int(log(q1_true, 10) - 2))
-    str = 'F({}, {}, {}, 10^{})'.format(c, q0, q1_true, x_true)
-    print(str)
-    return(q1_true)
-
 
 def cq_table(q_list, significant_figures=4):
     """Generate a table of c values corresponding to q_list formatted for LaTeX, then generate Sage
