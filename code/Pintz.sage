@@ -30,7 +30,7 @@ def constants(alpha):
                      + 3*alpha**2 + 6*alpha + 2), 1, Infinity)[0]
 
     C1 = (0.5 + alpha/12 - 1/(1-alpha) + integral1)
-    C2 = (11/12 + 1/(1 - alpha)**2 + integral2)
+    C2 = (-1/12 + 1/(1 - alpha)**2 + integral2)
 
     # print(C1, C2)
     return(C1, C2)
@@ -53,7 +53,7 @@ def error(q0, q1, A, tau, x, C1, C2):
 
     # Spitting sum
     D1 = x**tau*log(x)/2/x     # lead term of W
-    D2 =A/tau**2   # upper_sum
+    D2 = A/tau**2              # lead term of upper_sum
     z = sqrt(D2/D1)            # minimize D1*z + D2/z
     z *= 1
     z = min(z, x/2)
