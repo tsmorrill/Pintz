@@ -203,8 +203,8 @@ def best_c(q0, q1, significant_figures=2):
     c_even, c_odd = round(c_even, 5), round(c_odd, 5)
 
     TeX_string = "${{{}}} \cdot 10^{{{}}}$ & ${{{}}} \cdot 10^{{{}}}$ & \\num{{{}}} & $10^{{{}}}$  & \\num{{{}}} & $10^{{{}}}$  \\\\".format(q0_lead, q0_magnitude, q1_lead, q1_magnitude, c_even, x_even, c_odd, x_odd)
-    even_string = 'F({}, {}, {}, 10^{}, {})'.format(c_even, q0, q1, x_even, parity)
-    odd_string = 'F({}, {}, {}, 10^{}, {})'.format(c_odd, q0, q1, x_odd, parity)
+    even_string = 'F({}, {}, {}, 10^{}, {})'.format(c_even, q0, q1, x_even, even)
+    odd_string = 'F({}, {}, {}, 10^{}, {})'.format(c_odd, q0, q1, x_odd, odd)
 
     print('')
     print('For even chi, c = {}.'.format(c_even))
