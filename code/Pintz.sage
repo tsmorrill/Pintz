@@ -128,19 +128,20 @@ def search(c, q0, q1, x0, x1, step, parity):
 
     return(output, x)
 
-def best_c(q0, q1, parity='even', significant_figures=2):
+def best_c(q0, q1, significant_figures=2):
     """Calculate the maximal c so that F < 0 on the interval [q0, q1]."""
 
-    print('Sigel zeroes for {} characters'.format(parity))
+    parity = 'even'
+    print('Sigel zeroes for even characters.')
     print('')
 
-    c_true, c_step = 0, 1.0
+    c_even, c_step = 0, 1.0
     record_significant_figures, current_figures = False, 0
     done = False
 
     while not done:
         print('Trying increments of {}.'.format(c_step))
-        c, it_works = c_true + c_step, True
+        c, it_works = c_even + c_step, True
         while it_works:
             x0, x1, step = 0, log(q0^(1/c), 10), 1
             for i in range(3):
@@ -149,8 +150,8 @@ def best_c(q0, q1, parity='even', significant_figures=2):
                 if result:
                     it_works = True
                     record_significant_figures = True
-                    x_true, c_true = x, c
-                    print("q in [{}, {}], c >= {}.".format(q0, q1, c_true))
+                    x_even, c_even = x, c
+                    print("q in [{}, {}], c >= {}.".format(q0, q1, c_even))
                     c += c_step
                     break
                 else:
@@ -162,18 +163,51 @@ def best_c(q0, q1, parity='even', significant_figures=2):
         c_step /= 10
         print('')
 
+        parity = 'odd'
+        print('Sigel zeroes for odd characters.')
+        print('')
+
+        c_odd, c_step = 0, 1.0
+        record_significant_figures, current_figures = False, 0
+        done = False
+
+        while not done:
+            print('Trying increments of {}.'.format(c_step))
+            c, it_works = c_odd + c_step, True
+            while it_works:
+                x0, x1, step = 0, log(q0^(1/c), 10), 1
+                for i in range(3):
+                    result, x = search(c, q0, q1, x0, x1, step, parity)
+                    x0, x1, step = max(0, x - step), min(x1, x + step), step/10
+                    if result:
+                        it_works = True
+                        record_significant_figures = True
+                        x_odd, c_odd = x, c
+                        print("q in [{}, {}], c >= {}.".format(q0, q1, c_odd))
+                        c += c_step
+                        break
+                    else:
+                        it_works = False
+            if record_significant_figures == True:
+                current_figures += 1
+                if current_figures == significant_figures:
+                    done = True
+            c_step /= 10
+            print('')
+
     q0_magnitude = int(log(q0, 10))
     q0_lead = round(q0/10**q0_magnitude, 2)
     q1_magnitude = int(log(q1, 10))
     q1_lead = round(q1/10**q1_magnitude, 2)
 
-    str1 = "${{{}}} \cdot 10^{{{}}}$ & ${{{}}} \cdot 10^{{{}}}$ & \\num{{{}}} & $10^{{{}}}$ \\\\".format(q0_lead, q0_magnitude, q1_lead, q1_magnitude, round(c_true,5), x_true)
-    str2 = 'F({}, {}, {}, 10^{}, {})'.format(c_true, q0, q1, x_true, parity)
+    c_even, c_odd = round(c_even, 5), round(c_odd, 5)
 
-    print('c = {}.'.format(c_true))
+    TeX_string = "${{{}}} \cdot 10^{{{}}}$ & ${{{}}} \cdot 10^{{{}}}$ & \\num{{{}}} & $10^{{{}}}$  & \\num{{{}}} & $10^{{{}}}$  \\\\".format(q0_lead, q0_magnitude, q1_lead, q1_magnitude, c_even, x_even, c_odd, x_odd)
+    even_string = 'F({}, {}, {}, 10^{}, {})'.format(c_true, q0, q1, x_true, parity)
+    odd_string = 'F({}, {}, {}, 10^{}, {})'.format(c_true, q0, q1, x_true, parity)
+
     print('')
-
-    return(str1, str2)
+    return(TeX_string, even_string, odd_string)
 
 def best_q1(q0, c, parity):
     """Calculate the maximal q1 so that F < 0 on the interval [q0, q1] for fixed c."""
