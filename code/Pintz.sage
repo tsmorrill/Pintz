@@ -60,9 +60,9 @@ def error(q0, q1, A, tau, x, C1, C2):
 
     # Bordignon 2019
 
-    L_error1 = H6(A + z + 1) - H6(z)
-    L_error2 = H7(A + z + 1) - H7(z)
-    L_error3 = H8(A + z + 1) - H8(z)
+    L_error1 = H6(A + z) - H6(z)
+    L_error2 = H7(A + z) - H7(z)
+    L_error3 = H8(A + z) - H8(z)
 
     W = (x**tau*log(x)/2*z/x
          + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
