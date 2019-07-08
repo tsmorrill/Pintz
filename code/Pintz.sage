@@ -35,7 +35,7 @@ def constants(alpha):
     # print(C1, C2)
     return(C1, C2)
 
-def error(q0, q1, A, tau, x, C1, C2):
+def error(q0, q1, A, tau, x, C1, C2, parity):
     """Calculate F on the interval [q0, q1] for precomputed A, tau, C1, C2."""
 
     alpha = 1 - tau
@@ -95,7 +95,7 @@ def F(c, q0, q1, x, parity):
     tau = c/log(q1)
     alpha = 1 - tau
     C1, C2 = constants(alpha)
-    number = error(q0, q1, A, tau, x, C1, C2)
+    number = error(q0, q1, A, tau, x, C1, C2, parity)
 
     return (float(number))
 
@@ -121,7 +121,7 @@ def search(c, q0, q1, x0, x1, step, parity):
 
     for log_x in x_range:
         x = 10^log_x
-        number = error(q0, q1, A, tau, x, C1, C2)
+        number = error(q0, q1, A, tau, x, C1, C2, parity)
         values.append((float(number), log_x))
     F, x = (float(i) for i in min(values))
     output = (F < 0)
