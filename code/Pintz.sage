@@ -58,9 +58,7 @@ def error(q0, q1, A, tau, x, C1, C2, parity):
     z *= 1
     z = min(z, x/2)
 
-    # Bordignon 2019
-
-    if parity == 'even':
+    if parity == 'odd':        # Bordignon 2019
         L_error1 = H6(A + z) - H6(z)
         L_error2 = H7(A + z) - H7(z)
         L_error3 = H8(A + z) - H8(z)
