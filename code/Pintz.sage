@@ -260,7 +260,7 @@ def cq_table(q_list, significant_figures=4):
         print(odd_string)
 
 def subdivide(list):
-    new_list =
+    new_list = []
     for q0, q1 in zip(q_list, list[1:]):
         new_list.append(sqrt(q0*q1))
     return (list + new_list).sort()
