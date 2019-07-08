@@ -68,14 +68,14 @@ def error(q0, q1, A, tau, x, C1, C2, parity):
     z = min(z, x/2)
 
     if parity == 'even':        # Louboutin 2001
-        N = floor(sqrt(q)) - 1
-        L_error1 = (H6(N) - H6(1) - N/2*h6(N) + N/2*(h6(N) - h6(N+1)) + h6(N+1)/2
+        N = floor(sqrt(q1)) - 1
+        L_error1 = (H6(N+z) - H6(z) - N/2*h6(N) + N/2*(h6(N) - h6(N+1)) + h6(N+1)/2
                     + 0.5*((N+1)*h6(N+1) - h6(N+2))
                     + 3*h6(floor(z) + 1) - 2*h6(floor(z) + 2))
-        L_error2 = (H7(N) - H7(1) - N/2*h7(N) + N/2*(h7(N) - h7(N+1)) + h7(N+1)/2
+        L_error2 = (H7(N+z) - H7(z) - N/2*h7(N) + N/2*(h7(N) - h7(N+1)) + h7(N+1)/2
                     + 0.5*((N+1)*h7(N+1) - h7(N+2))
                     + 3*h7(floor(z) + 1) - 2*h7(floor(z) + 2))
-        L_error3 = (H6(N) - H6(1) - N/2*h6(N) + N/2*(h6(N) - h6(N+1)) + h6(N+1)/2
+        L_error3 = (H6(N+z) - H6(z) - N/2*h6(N) + N/2*(h6(N) - h6(N+1)) + h6(N+1)/2
                     + 0.5*((N+1)*h6(N+1) - h6(N+2))
                     + 3*h6(floor(z) + 1) - 2*h8(floor(z) + 2))
 
