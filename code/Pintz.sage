@@ -40,6 +40,15 @@ def error(q0, q1, A, tau, x, C1, C2, parity):
 
     alpha = 1 - tau
 
+    def h6(d):
+        return log(d)/d**(1-tau)
+    def h7(d):
+        return 1/d**(1-tau)
+    def h8(d):
+        return 1/d
+
+    # d/dx H[i](x) = h[i](x)
+
     def H6(d):
         return d**tau/tau*(log(d) - 1/tau)
     def H7(d):
@@ -57,6 +66,10 @@ def error(q0, q1, A, tau, x, C1, C2, parity):
     z = sqrt(D2/D1)            # minimize D1*z + D2/z
     z *= 1
     z = min(z, x/2)
+
+    if parity == 'even'        # Louboutin 2001
+        N = floor(sqrt(q)) - 1
+        L_error1 = H6(N) - H6(1)
 
     if parity == 'odd':        # Bordignon 2019
         L_error1 = H6(A + z) - H6(z)
