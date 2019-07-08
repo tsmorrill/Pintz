@@ -261,6 +261,11 @@ def cq_table(q_list, significant_figures=4):
 
 def subdivide(list):
     new_list = []
-    for q0, q1 in zip(q_list, list[1:]):
-        new_list.append(sqrt(q0*q1))
-    return (list + new_list).sort()
+    for q0, q1 in zip(list, list[1:]):
+        number = sqrt(q0*q1)
+        number_magnitude = int(log(number, 10))
+        number_lead = round(number/10**number_magnitude, 1)
+        new_list.append(number_lead*10**number_magnitude)
+    new_list += list
+    new_list.sort()
+    return new_list
