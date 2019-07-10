@@ -67,6 +67,8 @@ def error(q0, q1, A, tau, x, C1, C2, parity):
     z = min(z, x/2)
     z = floor(z)
 
+    L_error1, L_error2, L_error3 = +Infinity, +Infinity, +Infinity
+
     if parity == 'even':        # Louboutin 2001
         N0 = floor(sqrt(q0)) - 1
         N1 = floor(sqrt(q1)) - 1
@@ -80,10 +82,9 @@ def error(q0, q1, A, tau, x, C1, C2, parity):
                     - N0*(N0+3)/2*h8(N1 + z + 1)
                     + sqrt(q1)/2*((N1 + 1)*h8(N0 + z + 1) - N0*h8(N1 + z + 2)))
 
-    if parity == 'odd':        # Bordignon 2019
-        L_error1 = H6(A + z) - H6(z)
-        L_error2 = H7(A + z) - H7(z)
-        L_error3 = H8(A + z) - H8(z)
+    L_error1 = min(L_error1, H6(A + z) - H6(z))
+    L_error2 = min(L_error1, H7(A + z) - H7(z))
+    L_error3 = min(L_error1, H8(A + z) - H8(z))
 
     W = (x**tau*log(x)/2*z/x
          + x**tau*(1 + alpha*log(x))/24*z/x*(z/x + 1/x)
