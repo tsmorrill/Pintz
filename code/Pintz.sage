@@ -70,15 +70,12 @@ def error(q0, q1, A, tau, x, C1, C2, parity):
     if parity == 'even':        # Louboutin 2001
         N0 = floor(sqrt(q0)) - 1
         N1 = floor(sqrt(q1)) - 1
-        L_error1 = (H6(N+z) - H6(z) - N/2*h6(N) + N/2*(h6(N) - h6(N+1)) + h6(N+1)/2
-                    + 0.5*((N+1)*h6(N+1) - h6(N+2))
-                    + 3*h6(floor(z) + 1) - 2*h6(floor(z) + 2))
-        L_error2 = (H7(N+z) - H7(z) - N/2*h7(N) + N/2*(h7(N) - h7(N+1)) + h7(N+1)/2
-                    + 0.5*((N+1)*h7(N+1) - h7(N+2))
-                    + 3*h7(floor(z) + 1) - 2*h7(floor(z) + 2))
-        L_error3 = (H6(N+z) - H6(z) - N/2*h6(N) + N/2*(h6(N) - h6(N+1)) + h6(N+1)/2
-                    + 0.5*((N+1)*h6(N+1) - h6(N+2))
-                    + 3*h6(floor(z) + 1) - 2*h8(floor(z) + 2))
+        L_error1 = (H6(N1 + z) - H6(z) + N1*(N1 + 1)/2*h6(N0 + z + 2)
+                    + sqrt(q1)*(N1 + 1)*h6(N0 + z + 1))
+        L_error2 = (H7(N1 + z) - H7(z) + N1*(N1 + 1)/2*h7(N0 + z + 2)
+                    + sqrt(q1)*(N1 + 1)*h7(N0 + z + 1))
+        L_error3 = (H8(N1 + z) - H8(z) + N1*(N1 + 1)/2*h8(N0 + z + 2)
+                    + sqrt(q1)*(N1 + 1)*h8(N0 + z + 1))
 
     if parity == 'odd':        # Bordignon 2019
         L_error1 = H6(A + z) - H6(z)
