@@ -68,7 +68,8 @@ def error(q0, q1, A, tau, x, C1, C2, parity):
     z = floor(z)
 
     if parity == 'even':        # Louboutin 2001
-        N = floor(sqrt(q1)) - 1
+        N0 = floor(sqrt(q0)) - 1
+        N1 = floor(sqrt(q1)) - 1
         L_error1 = (H6(N+z) - H6(z) - N/2*h6(N) + N/2*(h6(N) - h6(N+1)) + h6(N+1)/2
                     + 0.5*((N+1)*h6(N+1) - h6(N+2))
                     + 3*h6(floor(z) + 1) - 2*h6(floor(z) + 2))
