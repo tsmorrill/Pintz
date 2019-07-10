@@ -2,7 +2,7 @@ Run '%time cq_table(q_list)' in Pintz.sage to reproduce  the data below.
 Run the F commands below to verify that F(c, tau, x) < 0 on the given intervals.
 
 q_list = [4e5, 5e5, 6e5, 7e5, 8e5, 9e5, 1e6, 1.8e6, 3e6, 4e6, 5.4e6,
-          7300000.0, 10000000.0, 1e7, 1.1e7, 1.2e7, 1.3e7, 1.4e7, 1.5e7,
+          7300000.0, 1e7, 1.1e7, 1.2e7, 1.3e7, 1.4e7, 1.5e7,
           1.6e7, 1.7e7, 1.8e7, 1.9e7, 2e7, 24000000.0, 3e7, 35000000.0, 4e7,
           46000000.0, 5.40000000000000e7, 73000000.0, 1e8, 130000000.0,
           1.8e8, 2.3e8, 3e8, 400000000.0, 5.40000000000000e8, 730000000.0, 1e9,
