@@ -11,7 +11,7 @@ def character_sum(q0, q1, parity):      # Lapkova 2018
     if parity == 'even':
         number = (2/pi**2 + 0.9467/log(q0) + 1.668/sqrt(q0)/log(q0))
     if parity == 'odd':
-        number = (0.5/pi + 0.8294/log(q0) + 1.0285/sqrt(q0)/log(q0))
+        number = (0.5/pi + 0.8204/log(q0) + 1.0286/sqrt(q0)/log(q0))
     return number*sqrt(q1)*log(q1)
 
 def constants(alpha):
